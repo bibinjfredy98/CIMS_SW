@@ -1,0 +1,1633 @@
+<!--sub_admin_dashboard.html-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>NxtEye-Sub Admin Dashboard</title>
+    <style>
+        /* Resetting default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0b151f;
+            color: #333;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            background-color: #13263d;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 20px;
+            color: rgb(230, 72, 14);
+        }
+
+        .nav-link {
+            color: rgb(230, 72, 14);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: rgb(82, 30, 12);
+        }
+
+        .container {
+            /* border: 1px solid black; */
+            background-color: #0b151f;
+            color: #fff;
+            border-radius: 0px;
+            /* box-shadow: 0 4px 6px rgba(101, 108, 120, 0.4); */
+            padding: 10px 20px;
+            align-items: center;
+            margin: 0 auto;
+            position: fixed;
+            top: 47.5px;
+            /* Set to the top of the viewport */
+            bottom: 0;
+            /* Set to the bottom of the viewport */
+            width: 100px;
+            /* Fixed width */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #Rooms {
+            background-color: #13263d;
+            border: 1px solid black;
+            width: 150px;
+            /* Set a fixed width for each section */
+            height: 100px;
+            /* Set a fixed height for each section */
+            margin-bottom: 10px;
+            /* Add some space between sections */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 10px;
+            /* Add border radius to create rounded corners */
+            cursor: pointer;
+            /* Change cursor to pointer on hover */
+            transition: all 0.3s ease;
+            /* Add transition effect for smooth hover */
+        }
+
+        #Rooms:hover {
+            transform: scale(1.05);
+            /* Scale up the box on hover */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+            /* Add a more pronounced shadow on hover */
+        }
+
+        #live {
+            background-color: #13263d;
+            border: 1px solid black;
+            width: 150px;
+            /* Set a fixed width for each section */
+            height: 100px;
+            /* Set a fixed height for each section */
+            margin-bottom: 10px;
+            /* Add some space between sections */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 10px;
+            /* Add border radius to create rounded corners */
+            cursor: pointer;
+            /* Change cursor to pointer on hover */
+            transition: all 0.3s ease;
+            /* Add transition effect for smooth hover */
+        }
+
+        #live:hover {
+            transform: scale(1.05);
+            /* Scale up the box on hover */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+            /* Add a more pronounced shadow on hover */
+        }
+
+        #alarm {
+            background-color: #13263d;
+            border: 1px solid black;
+            width: 150px;
+            /* Set a fixed width for each section */
+            height: 100px;
+            /* Set a fixed height for each section */
+            margin-bottom: 10px;
+            /* Add some space between sections */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 10px;
+            /* Add border radius to create rounded corners */
+            cursor: pointer;
+            /* Change cursor to pointer on hover */
+            transition: all 0.3s ease;
+            /* Add transition effect for smooth hover */
+        }
+
+        #alarm:hover {
+            transform: scale(1.05);
+            /* Scale up the box on hover */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #user {
+            background-color: #13263d;
+            border: 1px solid black;
+            width: 150px;
+            /* Set a fixed width for each section */
+            height: 100px;
+            /* Set a fixed height for each section */
+            margin-bottom: 10px;
+            /* Add some space between sections */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 10px;
+            /* Add border radius to create rounded corners */
+            cursor: pointer;
+            /* Change cursor to pointer on hover */
+            transition: all 0.3s ease;
+            /* Add transition effect for smooth hover */
+        }
+
+        #user:hover {
+            transform: scale(1.05);
+            /* Scale up the box on hover */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #config {
+            background-color: #13263d;
+            border: 1px solid black;
+            width: 150px;
+            /* Set a fixed width for each section */
+            height: 100px;
+            /* Set a fixed height for each section */
+            margin-bottom: 10px;
+            /* Add some space between sections */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 10px;
+            /* Add border radius to create rounded corners */
+            cursor: pointer;
+            /* Change cursor to pointer on hover */
+            transition: all 0.3s ease;
+            /* Add transition effect for smooth hover */
+        }
+
+        #config:hover {
+            transform: scale(1.05);
+            /* Scale up the box on hover */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+            color: white;
+            /* color: rgb(230, 72, 14); */
+            font-size: 10px;
+        }
+
+        .section i {
+            color: rgb(230, 72, 14)
+        }
+
+        .section i {
+            margin-bottom: 5px;
+            /* Adjust the spacing between icon and text */
+        }
+
+        .section span {
+            font-size: 8px;
+            /* Adjust the font size of the text */
+        }
+
+        #RoomsContent {
+            background-color: #0b151f;
+            /* Same color as #live for consistency */
+            color: white;
+            padding: 10px;
+            height: 597px;
+            width: 1320px;
+            margin-left: 50px;
+            margin-top: -302px;
+            margin-bottom: 0px;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Ensure it's above other content */
+            border: 1px solid black;
+        }
+
+        #liveContent {
+            background-color: #0b151f;
+            /* Same color as #live for consistency */
+            color: white;
+            padding: 10px;
+            height: 597px;
+            width: 1320px;
+            margin-left: 50px;
+            margin-top: -302px;
+            margin-bottom: 0px;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Ensure it's above other content */
+            border: 1px solid black;
+        }
+
+        #alarmContent {
+            background-color: #0b151f;
+            /* Same color as #live for consistency */
+            color: white;
+            padding: 10px;
+            height: 597px;
+            width: 1320px;
+            margin-left: 50px;
+            margin-top: -302px;
+            margin-bottom: 0px;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Ensure it's above other content */
+            border: 1px solid black;
+        }
+
+        #userContent {
+            background-color: #0b151f;
+            /* Same color as #live for consistency */
+            color: white;
+            padding: 10px;
+            height: 597px;
+            width: 1320px;
+            margin-left: 50px;
+            margin-top: -302px;
+            margin-bottom: 0px;
+            position: fixed;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Ensure it's above other content */
+            border: 1px solid black;
+
+
+        }
+
+        #configContent {
+            background-color: #0b151f;
+            /* Same color as #live for consistency */
+            color: white;
+            padding: 10px;
+            height: 597px;
+            width: 1320px;
+            margin-left: 50px;
+            margin-top: -302px;
+            margin-bottom: 0px;
+            position: fixed;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Ensure it's above other content */
+            border: 1px solid black;
+        }
+
+        #addedroomsmain {
+            border: 1px solid black;
+            background-color: #13263d;
+            width: 350px;
+            /* Set a fixed width for each section */
+            height: 300px;
+            /* Set a fixed height for each section */
+            margin-bottom: 10px;
+            /* Add some space between sections */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 0px;
+            /* Add border radius to create rounded corners */
+            cursor: pointer;
+            /* Change cursor to pointer on hover */
+            overflow: auto;
+
+
+        }
+
+        .add-room-btn {
+
+            position: absolute;
+            /* Make the button positioned absolute */
+            top: 12px;
+            /* Adjust top position */
+            left: 270px;
+            /* Adjust right position */
+            background-color: #2d3845;
+            /* Blue color, you can change this */
+            color: rgb(230, 72, 14);
+            /* White text color */
+            padding: 10px 20px;
+            /* Padding for the button */
+            border: none;
+            /* No border */
+            border-radius: 5px;
+            /* Rounded corners */
+            cursor: pointer;
+            /* Cursor style */
+            font-size: 10px;
+            /* Font size */
+            border: 1px solid black;
+            /* Black border */
+        }
+
+        .add-room-btn:hover {
+
+            background-color: black;
+            /* Darker blue color on hover */
+        }
+
+        #subadminrooms {
+            border: 1px solid black;
+            background-color: #13263d;
+            ;
+            width: 350px;
+            height: 265px;
+            margin-top: 100px;
+            margin-bottom: 0px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 0px;
+            cursor: pointer;
+            overflow: auto;
+
+        }
+
+
+        #subadminrooms ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #subadminrooms li {
+            background-color: #2d3845;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            padding: 15px;
+            border: 1px solid black;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #subadminrooms li p {
+            margin: 0;
+            font-size: 16px;
+            color: white;
+        }
+
+        #subadminrooms li form {
+            display: inline-block;
+        }
+
+        #subadminrooms li form input[type="hidden"] {
+            display: none;
+        }
+
+
+        #hiii {
+            background-color: #0a1b2f;
+            border: 4px solid black;
+            height: 260px;
+            width: 300px;
+            /* display: flex; */
+            overflow: scroll;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            /* For Firefox */
+            scrollbar-color: black #0d2746;
+            /* For Firefox */
+
+        }
+
+        /* Style the scrollbar for Firefox */
+        #hiii::-webkit-scrollbar {
+            width: 3px;
+            /* Set the width of the scrollbar */
+        }
+
+        #hiii::-webkit-scrollbar-track {
+            background: #0b151f;
+            /* Set the background color of the scrollbar track */
+        }
+
+        #hiii::-webkit-scrollbar-thumb {
+            background: black;
+            /* Set the color of the scrollbar thumb */
+        }
+
+        /* Style the scrollbar for other browsers */
+        #hiii {
+            scrollbar-width: thin;
+            /* Set the width of the scrollbar */
+        }
+
+        #hiii::-webkit-scrollbar-track {
+            background: #0b151f;
+            /* Set the background color of the scrollbar track */
+        }
+
+        #hiii::-webkit-scrollbar-thumb {
+            background-color: black;
+            /* Set the color of the scrollbar thumb */
+        }
+
+        #viewrooms {
+            border: 1px solid black;
+            background-color: #13263d;
+            ;
+            width: 900px;
+            /* Set a fixed width for each section */
+            height: 574px;
+            /* Set a fixed height for each section */
+            margin-top: 0px;
+            margin-bottom: 0px;
+            /* Add some space between sections */
+            margin-top: -575px;
+            margin-left: 380px;
+            margin-right: -100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 0px;
+            /* Add border radius to create rounded corners */
+            cursor: pointer;
+            /* Change cursor to pointer on hover */
+
+
+        }
+
+        #livedata {
+            padding: 20px;
+            color: #fff;
+            /* Text color */
+            font-family: Arial, sans-serif;
+            /* Choose a professional font */
+            font-size: 16px;
+            /* Adjust font size */
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Semi-transparent background */
+            border-radius: 8px;
+            /* Add rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            /* Add a subtle shadow */
+        }
+
+        #livedata p {
+            margin: 10px 0;
+            /* Add spacing between paragraphs */
+        }
+
+        #livedata span {
+            font-weight: bold;
+            /* Make span text bold */
+        }
+
+
+        .subbutton {
+            position: absolute;
+            /* Make the button positioned absolute */
+            top: 12px;
+            /* Adjust top position */
+            left: 270px;
+            /* Adjust right position */
+            background-color: #2d3845;
+            /* Blue color, you can change this */
+            color: #fff;
+            /* White text color */
+            padding: 10px 20px;
+            /* Padding for the button */
+            border: none;
+            /* No border */
+            border-radius: 5px;
+            /* Rounded corners */
+            cursor: pointer;
+            /* Cursor style */
+            font-size: 10px;
+            /* Font size */
+
+        }
+
+        #roomForm {
+            border: 4px solid black;
+            background-color: #0a1b2f;
+            width: 200px;
+            /* Set a fixed width for the container */
+            height: auto;
+            /* Allow height to adjust based on content */
+            padding: 20px;
+            /* Add padding for spacing inside the container */
+            margin-top: 10px;
+            margin-bottom: 0px;
+            display: flex;
+            flex-direction: column;
+            /* Align form elements vertically */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 0px;
+            cursor: pointer;
+            /* overflow: auto; */
+
+
+
+        }
+
+        #roomForm input[type="text"],
+        #roomForm button[type="submit"] {
+            padding: 1px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+        }
+
+        #roomForm button[type="submit"] {
+            background-color: #2d3845;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #roomForm button[type="submit"]:hover {
+            background-color: #1e2836;
+        }
+
+        #viewaddedrooms {
+            border: 1px solid black;
+            background-color: #0b151f;
+            width: 300px;
+            height: 250px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-top: -5px;
+            margin-left: 3px;
+            margin-right: -1px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 0px;
+            cursor: pointer;
+            overflow-y: hidden;
+            /* Enable vertical scrolling */
+            overflow-x: hidden;
+            /* Hide horizontal scrollbar */
+        }
+
+        /* Style the scrollbar for Firefox */
+        #viewaddedrooms::-webkit-scrollbar {
+            width: 3px;
+            /* Set the width of the scrollbar */
+        }
+
+        #viewaddedrooms::-webkit-scrollbar-track {
+            background: #0b151f;
+            /* Set the background color of the scrollbar track */
+        }
+
+        #viewaddedrooms::-webkit-scrollbar-thumb {
+            background: black;
+            /* Set the color of the scrollbar thumb */
+        }
+
+        /* Style the scrollbar for other browsers */
+        #viewaddedrooms {
+            scrollbar-width: thin;
+            /* Set the width of the scrollbar */
+        }
+
+        #viewaddedrooms::-webkit-scrollbar-track {
+            background: #0b151f;
+            /* Set the background color of the scrollbar track */
+        }
+
+        #viewaddedrooms::-webkit-scrollbar-thumb {
+            background-color: black;
+            /* Set the color of the scrollbar thumb */
+        }
+
+
+        /* Container for the room list */
+        .add-room-list {
+            /* background-color:#0a1b2f ; */
+            border: 4px solid black;
+            background-color: #13263d;
+            max-height: 250px;
+            /* Limit the max height of the list */
+            width: 300px;
+            overflow-y: auto;
+            /* Add vertical scrollbar when needed */
+            scrollbar-width: thin;
+            /* For Firefox */
+            scrollbar-color: black #0d2746;
+            /* For Firefox */
+        }
+
+        /* Styling for the unordered list */
+        .add-room-list ul {
+            list-style: none;
+            /* Remove default bullet points */
+            padding: 0;
+            /* Remove default padding */
+            margin: 0;
+            /* Remove default margin */
+        }
+
+        /* Styling for list items */
+        .add-room-list li {
+            padding: 10px;
+            /* Padding around each list item */
+            border-bottom: 1px solid #ddd;
+            /* Border at the bottom of each list item */
+            transition: background-color 0.3s;
+            /* Smooth transition for background color change */
+        }
+
+        /* Styling for the last list item */
+        .add-room-list li:last-child {
+            border-bottom: none;
+            /* Remove border from the last list item */
+        }
+
+        /* Hover effect for list items */
+        .add-room-list li:hover {
+            background-color: black;
+            /* Light background color on hover */
+            cursor: pointer;
+            /* Change cursor to pointer on hover */
+        }
+
+        /* Popup container */
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            /* Adjust the z-index to a high value */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Popup content */
+        .popup-content {
+            background-color: #3769a5;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #050303;
+            width: 20%;
+            margin-right: 30px;
+            margin-top: 50px;
+            overflow: auto;
+            /* Add overflow property */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+        }
+
+        /* Close button */
+        .close {
+            color: rgb(230, 72, 14);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+
+
+
+        .popup-content {
+            padding: 20px;
+            background-color: #13263d;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        .close {
+            float: right;
+            cursor: pointer;
+        }
+
+        h4 {
+            margin-top: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+
+
+        li:hover {
+            background-color: #060606;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        .subbuttonn {
+            background-color: #2d3845;
+            color: rgb(230, 72, 14);
+            border-color: black;
+            border-width: 2px;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .subbuttonn:hover {
+            background-color: rgb(82, 30, 12);
+        }
+
+        .hii {
+            background-color: #17293e;
+        }
+
+
+
+
+
+
+        .overview {
+            background-color: #0b151f;
+            /* Same color as #live for consistency */
+            color: white;
+            padding: 10px;
+            height: 597px;
+            width: 1320px;
+            margin-left: 50px;
+            margin-top: -302px;
+            margin-bottom: 0px;
+            position: fixed;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Ensure it's above other content */
+            border: 1px solid black;
+        }
+
+        .overviewdiv {
+            background-color: #13263d;
+            /* Same color as #live for consistency */
+            color: white;
+            padding: 10px;
+            height: 565px;
+            width: 1255px;
+            margin-left: 5px;
+            margin-top: -298px;
+            margin-bottom: 0px;
+            position: fixed;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Ensure it's above other content */
+            border: 1px solid black;
+        }
+
+        .overviewone {
+            background-color: #0f1720;
+            /* Same color as #live for consistency */
+            color: rgb(230, 72, 14);
+            padding: 10px;
+            height: 500px;
+            width: 300px;
+            margin-left: -420px;
+            margin-top: -282px;
+            margin-bottom: 0px;
+            position: fixed;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Ensure it's above other content */
+            border: 1px solid black;
+        }
+
+        .overviewtwo {
+            background-color: #0f1720;
+            /* Same color as #live for consistency */
+            color: rgb(230, 72, 14);
+            padding: 10px;
+            height: 500px;
+            width: 300px;
+            margin-left: 415px;
+            margin-top: -282px;
+            margin-bottom: 0px;
+            position: fixed;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Ensure it's above other content */
+            border: 1px solid black;
+        }
+
+        .overviewthree {
+            background-color: #0f1720;
+            /* Same color as #live for consistency */
+            color: rgb(230, 72, 14);
+            padding: 10px;
+            height: 500px;
+            width: 440px;
+            margin-left: -3px;
+            margin-top: -282px;
+            margin-bottom: 0px;
+            position: fixed;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            /* Ensure it's above other content */
+            border: 1px solid black;
+        }
+
+        /* .overviewfour{
+            background-color: #0f1720; 
+            color: white;
+            padding: 10px;
+            height: 50px;
+            width:300px;
+            margin-left: -420px;
+            margin-top: -450px;
+            margin-bottom: 0px;
+            position:fixed;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1; 
+            border: 1px solid black;
+        } */
+
+
+
+        #subroomlists {
+            background-color: #0f1720;
+            margin-top: 1px;
+            border: 1px solid black;
+            border-radius: 0px;
+            padding: 10px;
+            margin-left: -70%;
+            height: 90%;
+            /* Adjust the height as needed */
+            width: 200px;
+            /* Adjust the width as needed */
+            overflow: auto;
+            /* Add scrollbar if content exceeds the height */
+        }
+
+        #subroomlists h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+
+            font-size: 18px;
+            color: #333;
+        }
+
+        #subroomlists ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #subroomlists ul li {
+            padding: 5px 0px;
+            margin-bottom: 5px;
+            border: 1px solid black;
+            background-color: #2d3845;
+            color: rgb(230, 72, 14);
+            border-radius: 5px;
+        }
+
+        #subroomlists ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        #subroomlists ul li:hover {
+            background-color: black;
+        }
+
+
+        .sensor-box {
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid black;
+            margin-bottom: 10px;
+            padding: 5px;
+            background-color: #2d3845;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #room_detailsss {
+            background-color: #0f1720;
+            color: rgb(230, 72, 14);
+            padding: 10px;
+            height: 510px;
+            width: 440px;
+            margin-left: 400px;
+            margin-top: -295px;
+            margin-bottom: 0px;
+            position: fixed;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            border: 2px solid black;
+        }
+
+        /* Style the list items */
+        #room_detailsss p {
+            font-size: 14px;
+            color: #b5cade;
+            padding: 5px 0;
+            border-bottom: 4px solid black;
+        }
+
+        /* Add a final border to the last item */
+        #room_detailsss p:last-child {
+            border-bottom: none;
+        }
+
+        /* Style for sensor names */
+        .sensor-name {
+            color: #b5cade;
+            font-weight: bold;
+        }
+
+        /* Style for live values */
+        .live-value {
+            color: rgb(230, 72, 14);
+        }
+
+        /* _____________________________________________________________________________________________________ */
+
+
+        #alarmbox {
+            background-color: #13263d;
+            color: white;
+            padding: 10px;
+            height: 585px;
+            width: 1305px;
+            margin-left: 0px;
+            margin-top: -296px;
+            margin-bottom: 0px;
+            position: fixed;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            border: 1px solid black;
+            justify-content: center;
+            align-items: flex-end;
+            text-align: left;
+            cursor: pointer;
+
+
+        }
+
+        .room-list-container,
+        .room-details-container {
+            background-color: #0f1720;
+            padding: 30px;
+            border: 2px solid black;
+            overflow-y: auto;
+            height: 300px;
+            /* Enable vertical scrolling */
+        }
+
+        .room-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .room-list li {
+            background-color: #1e3047;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            /* Optional: add some rounding to list items */
+            transition: background-color 0.3s ease;
+        }
+
+        .room-list li:hover {
+            background-color: #1e3047;
+        }
+
+        .room-details-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .room-details-table td,
+        .room-details-table th {
+            padding: 10px;
+            border: 4px solid #2c4058;
+        }
+
+        .room-details-table th {
+            background-color: #1e3047;
+            color: white;
+            text-align: left;
+        }
+
+        .sensor-name {
+            font-weight: bold;
+        }
+
+        .live-value {
+            color: #33dbfd;
+        }
+
+        .room-item {
+            border: 2px solid black;
+            padding: 5px;
+            margin: 2px;
+            border-radius: 5px;
+            background-color: #13263d;
+            color: rgb(230, 72, 14);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+
+
+        .hidden {
+            display: none;
+        }
+
+        /* .threshold-setting,
+        .alert-view {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .threshold-setting input,
+        .threshold-setting select {
+            margin: 5px 0;
+            padding: 5px;
+        }
+
+        .alert-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .threshold-setting{
+            border: 2px solid black;
+            background-color: #0f1720;
+ 
+
+        } */
+
+        .form-container {
+            max-width: 600px;
+            max-height: 180px; /* Set the maximum height */
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #344e4f;
+            border-radius: 8px;
+            background-color: #0f1720;
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        .form-group input[type="number"]::-webkit-outer-spin-button,
+        .form-group input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .form-group button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #d4610e;
+            border: none;
+            border-radius: 4px;
+            color: rgb(52, 200, 216);
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        /* Scrollable list */
+        #alertsContainer {
+            max-height: 300px; /* Adjust height as needed */
+            overflow-y: auto;
+            /* Add vertical scrollbar when needed */
+            scrollbar-width: thin;
+            /* For Firefox */
+            scrollbar-color: black #0d2746;
+            /* For Firefox */
+        }
+
+        /* Styling for each alert item */
+        .alert-item {
+            background-color: #13263d;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        /* Additional styling for specific elements */
+        .room-name {
+            font-weight: bold;
+        }
+
+        .timestamp {
+            font-style: italic;
+        }
+
+        /* Hover effect */
+        .alert-item:hover {
+            background-color: black;
+        }
+
+
+
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+            box-shadow: 0 0 10px #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+
+        #sensorControlsContainer::-webkit-scrollbar-thumb {
+            background: black;
+            /* Set the color of the scrollbar thumb */
+        }
+
+        /* Style the scrollbar for other browsers */
+        #sensorControlsContainer {
+            scrollbar-width: thin;
+            /* Set the width of the scrollbar */
+        }
+
+        #sensorControlsContainer::-webkit-scrollbar-track {
+            background: #0b151f;
+            /* Set the background color of the scrollbar track */
+        }
+
+        #sensorControlsContainer::-webkit-scrollbar-thumb {
+            background-color: black;
+            /* Set the color of the scrollbar thumb */
+        }
+
+
+
+
+    </style>
+</head>
+
+   <!--sub_admin_dashboard.html-->
+
+
+<body>
+    <!-- Navigation bar -->
+    <div class="navbar">
+        
+
+        <div class="navbar-brand" style="color: rgb(230, 72, 14);">
+            Nxt<span style="font-style: italic;">E</span>ye-User :
+            {% if username %}
+                <span style="color: rgb(190, 187, 213);">{{ username }}</span>
+            {% endif %}
+        </div>
+        
+
+        
+        <ul class="navbar-nav">
+            <a href="{% url 'customm_logout' %}" class="nav-link" style="margin-left: 20px;"><i class="fas fa-sign-out-alt"></i></a>
+        </ul>
+    </div>
+    <div class="overview">
+       <div class="overviewdiv">
+
+            <div class="overviewone">
+                <!-- <h5>Alert Report</h5> -->
+                <h5>Notifications </h5>
+
+            </div>
+            <div class="overviewtwo">
+                <h5>History</h5>
+
+            </div>
+
+            <!-- <div class="overviewthree">
+                <h5>Alert Overview</h5>
+                <div class="alert-view">
+                    <h2>Alerts</h2>
+                    <form method="POST" action="{% url 'mark_alerts_viewed' %}">
+                        {% csrf_token %}
+                        <div id="alertsContainer" class="alert-list">
+                            <ul id="alertList">
+                                {% for alert in alerts %}
+                                    <li class="alert-item">
+                                        <p class="room-name" style="color:rgb(230, 72, 14);">Room Name: {{ alert.room.name }}</p>
+                                        <p class="alert-type" style="color: white;">Alert Type: {{ alert.type }}</p>
+                                        <p class="message" style="color: red;">Message: {{ alert.message }}</p>
+                                        <p class="timestamp" style="color: white;">Timestamp: {{ alert.timestamp }}</p>
+                                        <label for="viewed-{{ alert.id }}" style="color: white;">Viewed:</label>
+                                        <input type="checkbox" id="viewed-{{ alert.id }}" name="viewed_alerts" value="{{ alert.id }}" {% if alert.viewed %}checked{% endif %}>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <button type="submit" style="position: relative; background-color: #2d3845; color: rgb(230, 72, 14); padding: 10px 10px; border: 1px solid black; border-radius: 5px; cursor: pointer; font-size: 10px;">Update Viewed Status</button>
+                    </form>
+                </div>
+            </div> -->
+            <div class="overviewthree">
+                <h5>Alert</h5>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="alert-view">
+                    <form method="POST" action="{% url 'mark_alertss_viewed' %}">
+                        {% csrf_token %}
+                        <div id="alertsContainer" class="alert-list">
+                            <ul id="alertList">
+                                <!-- Alerts will be dynamically added here -->
+                            </ul>
+                        </div>
+                        <button type="submit" style="position: relative; background-color: #2d3845; color: rgb(230, 72, 14); padding: 10px 10px; border: 1px solid black; border-radius: 5px; cursor: pointer; font-size: 10px;">Update Viewed Status</button>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="section" id="Rooms">
+            <i class="fas fa-door-open"></i>
+            <span>ROOMS</span>
+         </div>
+        <div class="section" id="live">
+            <i class="fas fa-video"></i>
+            <span>LIVE</span>
+        </div>
+        <div class="section" id="alarm">
+            <i class="fas fa-bell"></i>
+            <span>ALARM</span>
+        </div>
+        <div class="section" id="user">
+            <i class="fas fa-user"></i>
+            <span>USER</span>
+        </div>
+        <div class="section" id="config">
+            <i class="fas fa-cog"></i>
+            <span>CONFIG</span>
+        </div>
+    </div>
+
+    <div id="RoomsContent" class="hidden">
+
+        <div id="addedroomsmain">
+            <button id="addRoomBtn" class="add-room-btn" >Add Room</button>
+            <!-- Form for adding a room (initially hidden) -->
+            <div id="addRoomForm" class="hidden">
+                <form method="post" id="roomForm">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+                <div id="viewaddedrooms">
+                    <div class="add-room-list">
+                        <ul id="roomList">
+                            {% for room in rooms %}
+                            <li>
+                                <span style="color: rgb(244, 246, 247);">{{ room.name }}</span>
+                                <form method="post" class="delete-room-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="delete_room_id" value="{{ room.id }}">
+                                    <!-- <button type="submit" class="delete-room-btn">Delete</button> -->
+                                    <button type="submit" class="delete-room-btn" style="position: relative; background-color: #2d3845; color: rgb(230, 72, 14); padding: 5px 10px; border: 1px solid black; border-radius: 5px; cursor: pointer; font-size: 10px;">Delete</button>
+
+                                </form>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>    
+        </div>
+
+
+    </div>
+
+    <div id="liveContent" class="hidden">
+        
+
+    </div>
+
+    <div id="alarmContent" class="hidden">
+
+    </div>
+
+    <div id="userContent" class="hidden">
+
+    </div>
+
+    <div id="configContent" class="hidden">
+
+    </div>
+
+
+
+</body>
+<script>
+
+    // these are for the contents to come while clicked onn the corresponding divs 
+    
+        document.getElementById("live").addEventListener("click", function() {
+            document.getElementById("liveContent").classList.toggle("hidden");
+        });
+        
+        document.getElementById("alarm").addEventListener("click", function() {
+            document.getElementById("alarmContent").classList.toggle("hidden");
+        });
+        
+        document.getElementById("Rooms").addEventListener("click", function() {
+            document.getElementById("RoomsContent").classList.toggle("hidden");
+        });
+    
+        document.getElementById("user").addEventListener("click", function() {
+            document.getElementById("userContent").classList.toggle("hidden");
+        });
+    
+        document.getElementById("config").addEventListener("click", function() {
+            document.getElementById("configContent").classList.toggle("hidden");
+        });
+        document.body.addEventListener('click', function(event) {
+        var liveContent = document.getElementById('liveContent');
+        var alarmContent = document.getElementById('alarmContent');
+        var roomsContent = document.getElementById('RoomsContent');
+        var userContent = document.getElementById('userContent');
+        var configContent = document.getElementById('configContent');
+    
+        // Check if the clicked element is not within liveContent
+        if (!liveContent.contains(event.target) && event.target.id !== 'live') {
+            liveContent.classList.add('hidden');
+        }
+    
+        // Check if the clicked element is not within alarmContent
+        if (!alarmContent.contains(event.target) && event.target.id !== 'alarm') {
+            alarmContent.classList.add('hidden');
+        }
+    
+        // Check if the clicked element is not within roomsContent
+        if (!roomsContent.contains(event.target) && event.target.id !== 'Rooms') {
+            roomsContent.classList.add('hidden');
+        }
+
+        if (!userContent.contains(event.target) && event.target.id !== 'user') {
+            userContent.classList.add('hidden');
+        }
+
+        if (!configContent.contains(event.target) && event.target.id !== 'config') {
+            configContent.classList.add('hidden');
+        }
+    });
+     
+     
+// for the add room form to come
+    document.getElementById("addRoomBtn").addEventListener("click", function() {
+        document.getElementById("addRoomForm").classList.toggle("hidden");
+    });
+
+
+// delete room from the view added rooms list 
+    document.addEventListener("DOMContentLoaded", function() {
+        // Add event listener to all delete room forms
+        var deleteForms = document.querySelectorAll('.delete-room-form');
+        deleteForms.forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Send an AJAX request to delete the room
+                var formData = new FormData(form);
+                fetch('', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // If successful, remove the room from UI
+                        var roomItem = form.parentElement;
+                        roomItem.remove();
+                    } else {
+                        // Handle errors if needed
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    });
+
+// Function to open the popup
+function openPopup() {
+    var popup = document.getElementById("popup");
+    popup.style.display = "block";
+}
+
+// Function to close the popup
+function closePopup() {
+    var popup = document.getElementById("popup");
+    popup.style.display = "none";
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    function fetchAlerts() {
+        fetch('/api/latest_alertss/')
+            .then(response => response.json())
+            .then(data => {
+                const alertList = document.getElementById('alertList');
+                alertList.innerHTML = ''; // Clear the current list
+                data.alerts.forEach(alert => {
+                    const alertItem = document.createElement('li');
+                    alertItem.className = 'alert-item';
+                    alertItem.innerHTML = `
+                        <p class="room-name" style="color:rgb(230, 72, 14);">Room Name: ${alert.room}</p>
+                        <p class="alert-type" style="color: white;">Alert Type: ${alert.type}</p>
+                        <p class="message" style="color: red;">Message: ${alert.message}</p>
+                        <p class="timestamp" style="color: white;">Timestamp: ${alert.timestamp}</p>
+                        <label for="viewed-${alert.id}" style="color: white;">Viewed:</label>
+                        <input type="checkbox" id="viewed-${alert.id}" name="viewed_alertss" value="${alert.id}" ${alert.viewed ? 'checked' : ''}>
+                    `;
+                    alertList.appendChild(alertItem);
+                });
+            })
+            .catch(error => console.error('Error fetching alerts:', error));
+    }
+
+    // Poll the server every 5 seconds
+    setInterval(fetchAlerts, 5000);
+
+    // Fetch alerts immediately when the page loads
+    fetchAlerts();
+});
+
+
+
+</script>        
+</html>

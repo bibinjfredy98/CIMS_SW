@@ -1,0 +1,1249 @@
+{% extends 'base1.html' %}
+{% block content_wrapper_class %}black-background{% endblock %}
+{% load static %}
+{% get_static_prefix as static %}
+
+
+{% block content %}
+
+
+<!-- 
+<div class="navigation-buttons text-center mt-3">
+    <button id="prevBtn" class="btn btn-outline-primary rounded-pill small-btn me-2">
+        <i class="fas fa-arrow-left me-1"></i>Previous
+    </button>
+    <button id="nextBtn" class="btn btn-outline-primary rounded-pill small-btn me-2">
+        Next<i class="fas fa-arrow-right ms-1"></i>
+    </button>
+    <button id="pinBtn" class="btn btn-outline-secondary rounded-circle small-btn-icon p-1">
+        <i id="pinIcon" class="fas fa-thumbtack"></i>
+    </button>
+</div> -->
+
+
+
+
+
+<!-- Content -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <!-- <h4 class="py-3 mb-4"><span class="text-muted fw-light">UI Elements /</span> Cards Statistics</h4> -->
+    <div class="row">
+
+
+        <div class="col-lg-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black;">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div class="card-title mb-0">
+                        <h5 class="mb-0 me-2">Total Alerts in 24 hrs</h5>
+                        <small id="totalAlertsCount">alerts : 0</small>
+                    </div>
+                    <div class="card-icon">
+                        <!-- <span class="badge bg-label-primary rounded-pill p-2">
+                            <i class="ti ti-alert-circle ti-sm"></i>
+                        </span> -->
+                        <a href="{% url 'alerts_page' %}">
+                            <span class="badge bg-label-primary rounded-pill p-2">
+                                <i class="ti ti-alert-circle ti-sm"></i>
+                            </span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-lg-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black;" onclick="openBuildingsModal()">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div class="card-title mb-0">
+                        <h5 class="mb-0 me-2">Unviewed Alerts</h5>
+                        <small class="unviewed-alerts-count">Alerts: 0</small>
+                    </div>
+                    <div class="card-icon">
+                        <span class="badge bg-label-success rounded-pill p-2">
+                            <i class="ti ti-server ti-sm"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Buildings Modal -->
+        <div class="modal fade" id="buildingsModal" tabindex="-1" aria-labelledby="buildingsModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content" style="background-color: black; color: white;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="buildingsModalLabel">Click to resolve the alerts of Buildings</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="buildingsList" class="list-group"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirm Modal -->
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="background-color: black; color: white;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirm Resolve</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to resolve alerts for all rooms in this building?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="confirmButton">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <div class="col-lg-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black;">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div class="card-title mb-0">
+                        <h5 class="mb-0 me-2">Notifications</h5>
+                        <small id="notification-text">Loading...</small>
+                    </div>
+                    <div class="card-icon">
+                        <span class="badge bg-label-danger rounded-pill p-2">
+                            <i class="ti ti-chart-pie-2 ti-sm"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+       
+        <div class="col-lg-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black;">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div class="card-title mb-0">
+                        <h5 class="mb-0 me-2">Issues Found</h5>
+                        <small>issues: <span id="inactive_roooms">0</span></small>
+                    </div>
+        
+                    <div class="card-icon">
+                        <span class="badge bg-label-warning rounded-pill p-2">
+                            <i class="ti ti-alert-octagon ti-sm"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--/ Cards with few info -->
+
+
+        <div class="col-lg-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black;">
+
+                <div class="hexcard-body">
+                    <h5 class="card-title">Devices</h5>
+                    <div id="hexsecond-grid" class="hexsecond-grid">
+                        <!-- Add your hex grid content here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="col-lg-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black;">
+                <h5>live Alert</h5>
+                <div id="sensorReadingsContainer" class="sensor-readings-responsive">
+                    <div class="sensor-readings-wrapper">
+                        <table class="sensor-readings-table">
+                            <thead>
+                                <tr>
+                                    <th>Tem</th>
+                                    <th>Hum</th>
+                                    <th>Door</th>
+                                    <th>Motion</th>
+                                    <th>Gas</th>
+                                    <th>Flood</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sensorReadingsBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black;">
+                <h5>Alert Details</h5>
+                <div id="sensorMetadataContainer" class="sensor-metadata-responsive">
+                    <div class="sensor-metadata-wrapper">
+                        <table class="sensor-metadata-table">
+                            <thead>
+                                <tr>
+                                    <th>Building</th>
+                                    <th>Room</th>
+                                    <th>Status</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sensorMetadataBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black;">
+                <h5>Total Alerts 24hrs</h5>
+                <div id="sensorpastalertContainer" class="sensor-pastalert-responsive">
+                    <div class="sensor-pastalert-wrapper">
+                        <table class="sensor-pastalert-table">
+                            <thead>
+                                <tr>
+                                    <th>Tem</th>
+                                    <th>Hum</th>
+                                    <th>Door</th>
+                                    <th>Motion</th>
+                                    <th>Gas</th>
+                                    <th>Flood</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sensorpastalertBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="col-xl-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black; max-height: 300px; overflow-y: auto;">
+                <div class="card-header pb-0">
+                    <h5 class="mb-2 card-title">Temperature of Each Device</h5>
+                </div>
+                <div class="card-body px-0 custom-scroll" style="overflow-y: auto; max-height: 400px;">
+                    <div id="temperature-bars"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black; max-height: 300px; overflow-y: auto;">
+                <div class="card-header pb-0">
+                    <h5 class="mb-2 card-title">Humidity of Each Device</h5>
+                </div>
+                <div class="card-body px-0 custom-scroll" style="overflow-y: auto; max-height: 400px;">
+                    <div id="humidity-bars"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black; max-height: 300px; overflow-y: auto;">
+                <div class="card-header pb-0">
+                    <h5 class="mb-2 card-title">Power</h5>
+                </div>
+                <div class="card-body px-0 custom-scroll" style="overflow-y: auto; max-height: 400px;">
+                    <div id="heatmaproom"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-sm-6 mb-4">
+            <div class="card h-100" style="background-color: black; max-height: 300px; overflow-y: auto;">
+                <div class="card-header pb-0">
+                    <h5 class="mb-2 card-title">Active Power Source</h5>
+                </div>
+
+                <div class="card-body px-0 custom-scroll" style="overflow-y: auto; max-height: 400px;">
+                    <div id="powersourcebuilding" class="hexthird-grid"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+       
+        <div class="col-md-12">
+            <div class="card h-100" style="background-color: black; max-height: 600px; overflow-y: auto;">
+                <div class="card-header pb-0">
+                    <!-- <h5 class="mb-2 card-title">Temperature and Humidity Chart</h5> -->
+                    <!-- <select id="roomSelect" class="form-control" style="background-color: black;">
+                    </select> -->
+                    <select id="roomSelect" class="form-control" style="background-color: black; width: 200px;">
+                    </select>
+                    
+                </div>
+                <div class="card-body px-0 custom-scroll" style="overflow-y: auto; max-height: 400px;">
+                    <div id="temhumChart"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+</div>
+
+
+
+
+<script>
+
+
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Function to update room counts
+        function updateRoomCounts() {
+            fetch('/get-active-inactive-rooms-dash1/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('inactive_roooms').innerText = data.inactive_numbers;
+                });
+        }
+
+        // Call the function when the page loads
+        updateRoomCounts();
+
+        // Fetch room counts every 20 seconds (20000 milliseconds)
+        setInterval(updateRoomCounts, 20000);
+    });
+
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Function to fetch rooms dynamically
+        function fetchRooms() {
+            $.ajax({
+                url: "{% url 'fetch_rooms_temhum' %}", // Django URL for fetching room list
+                method: "GET",
+                success: function (response) {
+                    const roomSelect = $("#roomSelect");
+                    roomSelect.empty(); // Clear previous options
+                    response.rooms.forEach(room => {
+                        roomSelect.append(`<option value="${room.id}">${room.name}</option>`);
+                    });
+                    fetchLiveData(); // Load data for the first room
+                }
+            });
+        }
+
+        // Function to fetch live data for the selected room
+        function fetchLiveData() {
+            const roomId = $("#roomSelect").val();
+            $.ajax({
+                url: "{% url 'fetch_live_sensor_data_temhum' %}",
+                data: { room_id: roomId },
+                method: "GET",
+                success: function (response) {
+                    const { temperature, humidity, timestamp } = response;
+                    chart.updateSeries([
+                        { name: 'Temperature', data: temperature },
+                        { name: 'Humidity', data: humidity }
+                    ]);
+                    chart.updateOptions({
+                        xaxis: { categories: timestamp }
+                    });
+                }
+            });
+        }
+
+        const chartOptions = {
+            chart: {
+                type: 'line',
+                height: 350,
+                zoom: { enabled: false },
+                toolbar: { show: false },
+                background: '#000000' // Set chart background to black
+            },
+            series: [
+                { name: 'Temperature', data: [] },
+                { name: 'Humidity', data: [] }
+            ],
+            xaxis: {
+                categories: [],
+                labels: {
+                    style: {
+                        colors: '#FFFFFF', // White labels for contrast
+                        fontSize: '12px'
+                    }
+                },
+                axisBorder: { color: '#FFFFFF' }, // White axis border
+                axisTicks: { color: '#FFFFFF' } // White ticks
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: '#FFFFFF', // White labels for y-axis
+                        fontSize: '12px'
+                    }
+                }
+            },
+            title: {
+                text: 'Live Temperature and Humidity Data',
+                align: 'center',
+                style: {
+                    fontSize: '16px',
+                    color: '#FFFFFF' // White text for title
+                }
+            },
+            grid: {
+                borderColor: '#333333', // Subtle grid lines for better visibility
+                strokeDashArray: 4
+            },
+            dataLabels: {
+                enabled: false // Disable data labels for a cleaner look
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2
+            },
+            colors: ['#FF5733', '#33C4FF'], // Vibrant colors for temperature and humidity
+            legend: {
+                position: 'top',
+                horizontalAlign: 'center',
+                labels: {
+                    colors: '#FFFFFF' // White labels for legend
+                }
+            }
+        };
+
+        
+        
+
+        const chart = new ApexCharts(document.querySelector("#temhumChart"), chartOptions);
+        chart.render();
+
+        // Fetch live data every 3 seconds
+        setInterval(fetchLiveData, 3000);
+
+        // Reload data when room selection changes
+        $("#roomSelect").on("change", fetchLiveData);
+
+        // Fetch rooms initially
+        fetchRooms();
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    let roomIndex = 0;
+    let messageIndex = 0;  // To track which message to show
+
+    function updateNotifications() {
+        fetch('/get_combined_sensor_data/') // Replace with the correct endpoint
+            .then(response => response.json())
+            .then(data => {
+                const sensorData = data.sensor_data;
+                if (sensorData.length > 0) {
+                    const room = sensorData[roomIndex];
+
+                    let notificationMessage = '';
+
+                    // Check which message to show
+                    if (messageIndex === 0) {
+                        notificationMessage = `Room: ${room.room_name}, Avg Temp: ${room.average_temperature}°C, Avg Hum: ${room.average_humidity}%`;
+                    } else if (messageIndex === 1) {
+                        notificationMessage = `Peak Temp: ${room.peak_temperature}°C, Low Temp: ${room.low_temperature}°C, Peak Hum: ${room.peak_humidity}%, Low Hum: ${room.low_humidity}%`;
+                    } else if (messageIndex === 2) {
+                        notificationMessage = `Status: ${room.status}`;
+                    }
+
+                    document.getElementById('notification-text').textContent = notificationMessage;
+
+                    // Move to the next message
+                    messageIndex = (messageIndex + 1) % 3;
+
+                    // Cycle to the next room after all messages are shown
+                    if (messageIndex === 0) {
+                        roomIndex = (roomIndex + 1) % sensorData.length;
+                    }
+                } else {
+                    document.getElementById('notification-text').textContent = "No data available.";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching sensor data:", error);
+                document.getElementById('notification-text').textContent = "Error loading data.";
+            });
+    }
+
+    // Update notifications every 5 seconds
+    setInterval(updateNotifications, 5000);
+
+    // Initial load
+    updateNotifications();
+
+
+
+
+
+
+    function openBuildingsModal() {
+        fetch('/api/get_buildings/')
+            .then(response => response.json())
+            .then(data => {
+                const buildingsList = document.getElementById('buildingsList');
+                buildingsList.innerHTML = ''; // Clear the list
+                data.buildings.forEach(building => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    listItem.innerHTML = `
+                    ${building.name}
+                    <button class="btn btn-primary btn-sm" onclick="openConfirmModal(${building.id})">Resolve Alert</button>
+                `;
+                    buildingsList.appendChild(listItem);
+                });
+                const modal = new bootstrap.Modal(document.getElementById('buildingsModal'));
+                modal.show();
+            })
+            .catch(error => console.error('Error fetching buildings:', error));
+    }
+
+    function openConfirmModal(buildingId) {
+        const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+        const confirmButton = document.getElementById('confirmButton');
+
+        confirmButton.onclick = function () {
+            resolveAlerts(buildingId);
+            confirmModal.hide();
+        };
+
+        confirmModal.show();
+    }
+
+    function resolveAlerts(buildingId) {
+        fetch(`/mark_all_alerts_as_viewed/${buildingId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'), // CSRF token helper
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('All alerts resolved successfully.');
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(`${name}=`)) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     // Define color variables based on the style theme
+    //     let cardColor, headingColor, labelColor, legendColor, borderColor;
+
+    //     if (isDarkStyle) {
+    //         cardColor = config.colors_dark.cardColor;
+    //         headingColor = config.colors_dark.headingColor;
+    //         labelColor = config.colors_dark.textMuted;
+    //         legendColor = config.colors_dark.bodyColor;
+    //         borderColor = config.colors_dark.borderColor;
+    //     } else {
+    //         cardColor = config.colors.cardColor;
+    //         headingColor = config.colors.headingColor;
+    //         labelColor = config.colors.textMuted;
+    //         legendColor = config.colors.bodyColor;
+    //         borderColor = config.colors.borderColor;
+    //     }
+
+    //     // Define chart-specific colors for series
+    //     const chartColors = {
+    //         temperature: '#3f51b5', // Temperature
+    //         humidity: '#00bcd4',    // Humidity
+    //         door: '#ff5722',        // Door
+    //         flood: '#4caf50',       // Flood
+    //         pir: '#9c27b0',         // PIR
+    //         gas: '#ffc107',         // Gas
+    //         background: '#e3f2fd'   // Light Blue Background
+    //     };
+
+    //     // Fetch the data and render the charts
+    //     fetch('/api/alert-stats/')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             // Pie Chart Data (distribution of alert types)
+    //             const alertTypes = data.alert_types.map(alert => alert.type);
+    //             const alertCounts = data.alert_types.map(alert => alert.count);
+
+    //             const pieChartOptions = {
+    //                 chart: {
+    //                     type: 'pie',
+    //                     height: 350,
+    //                     // background: cardColor
+    //                     background: '#000', // Explicit black background
+    //                 },
+    //                 series: alertCounts,
+    //                 labels: alertTypes,
+    //                 colors: [
+    //                     chartColors.temperature,
+    //                     chartColors.humidity,
+    //                     chartColors.door,
+    //                     chartColors.flood,
+    //                     chartColors.pir,
+    //                     chartColors.gas
+    //                 ],
+    //                 title: {
+    //                     text: 'Alerts Distribution',
+    //                     align: 'center',
+    //                     style: {
+    //                         color: headingColor,
+    //                         fontSize: '18px',
+    //                         fontWeight: 'bold'
+    //                     }
+    //                 },
+    //                 legend: {
+    //                     position: 'bottom',
+    //                     labels: {
+    //                         colors: legendColor,
+    //                         useSeriesColors: false
+    //                     }
+    //                 },
+    //                 dataLabels: {
+    //                     style: {
+    //                         colors: [labelColor]
+    //                     }
+    //                 }
+    //             };
+    //             const pieChart = new ApexCharts(document.querySelector("#pieChart"), pieChartOptions);
+    //             pieChart.render();
+
+    //             // Radial Bar Chart Data (percentage viewed/unviewed)
+    //             const radialBarChartOptions = {
+    //                 chart: {
+    //                     type: 'radialBar',
+    //                     height: 350,
+    //                     // background: cardColor
+    //                     background: '#000', // Explicit black background
+    //                 },
+    //                 series: [data.percentage_viewed, data.percentage_unviewed],
+    //                 labels: ['Viewed', 'Unviewed'],
+    //                 colors: [chartColors.humidity, chartColors.pir],
+    //                 title: {
+    //                     text: 'Alert Statistics',
+    //                     align: 'center',
+    //                     style: {
+    //                         color: headingColor,
+    //                         fontSize: '18px',
+    //                         fontWeight: 'bold'
+    //                     }
+    //                 },
+    //                 plotOptions: {
+    //                     radialBar: {
+    //                         dataLabels: {
+    //                             name: {
+    //                                 color: labelColor,
+    //                                 fontSize: '16px'
+    //                             },
+    //                             value: {
+    //                                 color: labelColor,
+    //                                 fontSize: '14px'
+    //                             },
+    //                             total: {
+    //                                 show: true,
+    //                                 label: 'Total',
+    //                                 color: labelColor,
+    //                                 formatter: function (w) {
+    //                                     return data.percentage_viewed + data.percentage_unviewed + '%';
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+    //                 },
+    //                 legend: {
+    //                     show: true,
+    //                     position: 'bottom',
+    //                     labels: {
+    //                         colors: legendColor
+    //                     }
+    //                 }
+    //             };
+    //             const radialBarChart = new ApexCharts(document.querySelector("#radialBarChart"), radialBarChartOptions);
+    //             radialBarChart.render();
+    //         })
+    //         .catch(error => console.error('Error fetching alert data:', error));
+    // });
+
+
+
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     // DataTable Initialization
+    //     var alertTable = $('#alertHistoryTable').DataTable({
+    //         processing: true,
+    //         serverSide: true,
+    //         ajax: function (data, callback, settings) {
+    //             // Show the custom loading spinner
+    //             $('#alertHistoryTable').closest('.table-container').addClass('loading');
+
+    //             $.ajax({
+    //                 url: '/get_alert_history/',
+    //                 data: {
+    //                     page: Math.floor(settings._iDisplayStart / settings._iDisplayLength) + 1,
+    //                     page_size: settings._iDisplayLength
+    //                 },
+    //                 success: function (response) {
+    //                     callback({
+    //                         recordsTotal: response.total,
+    //                         recordsFiltered: response.filtered_total,
+    //                         data: response.data
+    //                     });
+    //                     // Hide the loading spinner after data is fetched
+    //                     $('#alertHistoryTable').closest('.table-container').removeClass('loading');
+    //                 }
+    //             });
+    //         },
+    //         columns: [
+    //             { data: 'building' },
+    //             { data: 'room' },
+    //             { data: 'type' },
+    //             { data: 'message' },
+    //             { data: 'timestamp' },
+    //             { data: 'viewed' },
+    //             { data: 'viewed_by' },
+    //         ],
+    //         pageLength: 10,
+    //         lengthMenu: [5, 10, 25, 50],
+    //         order: [[4, 'desc']],
+    //     });
+
+    //     // Set an interval to refresh the table every 5 seconds
+    //     setInterval(function () {
+    //         alertTable.ajax.reload(null, false); // Reload the DataTable without resetting the pagination
+    //     }, 10000); // 5000 milliseconds = 5 seconds
+    // });
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Function to update hexagons
+        function updateHexagons() {
+            $.ajax({
+                url: '/get_power_sensor_data/',  // Endpoint to fetch power data
+                method: 'GET',
+                success: function (response) {
+                    const hexGrid = $('#powersourcebuilding');
+                    hexGrid.empty();  // Clear the current hexagons
+
+                    response.sensor_data.forEach(roomData => {
+                        roomData.building_names.forEach(buildingName => {
+                            // Find the CT value with the maximum value
+                            const maxCtValue = Math.max(roomData.ct1, roomData.ct2, roomData.ct3, roomData.ct4);
+                            let ctName = '';
+                            if (maxCtValue === roomData.ct1) ctName = roomData.ct1correspondingname;
+                            else if (maxCtValue === roomData.ct2) ctName = roomData.ct2correspondingname;
+                            else if (maxCtValue === roomData.ct3) ctName = roomData.ct3correspondingname;
+                            else if (maxCtValue === roomData.ct4) ctName = roomData.ct4correspondingname;
+
+                            // Create hexagon element
+                            const hexagon = $('<div>')
+                                .addClass('hexthird')
+                                .addClass(maxCtValue > 0.1 ? 'red' : 'green')
+                                .text(buildingName + ": " + ctName);
+
+                            hexGrid.append(hexagon);
+                        });
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching power sensor data:", error);
+                }
+            });
+        }
+
+        // Initial load
+        updateHexagons();
+
+        // Set interval to update the data every 5 seconds
+        setInterval(updateHexagons, 5000); // Refresh every 5 seconds
+    });
+
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const heatmapContainer = document.getElementById("heatmaproom");
+
+        // Fetch the sensor data
+        fetch('/get_combined_sensor_data/') // Replace with your actual API endpoint
+            .then(response => response.json())
+            .then(data => {
+                const sensorData = data.sensor_data;
+
+                // Render rows with room names and corresponding blocks
+                sensorData.forEach(room => {
+                    const rowContainer = document.createElement("div");
+                    rowContainer.style.display = "grid";
+                    rowContainer.style.gridTemplateColumns = "1fr 3fr"; // Adjust room name and grid proportion
+                    rowContainer.style.alignItems = "center";
+                    rowContainer.style.gap = "5px"; // Decreased gap between rows
+                    rowContainer.style.marginBottom = "8px"; // Reduced space between rows
+                    rowContainer.style.padding = "5px";
+                    rowContainer.style.border = "1px solid #333"; // Darker border for contrast
+                    rowContainer.style.borderRadius = "8px"; // Slightly more rounded corners
+                    rowContainer.style.backgroundColor = "#111"; // Darker background color
+                    rowContainer.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.5)"; // Stronger shadow for contrast
+
+                    // Room name column
+                    const roomNameCell = document.createElement("div");
+                    roomNameCell.textContent = room.room_name || "Unknown";
+                    roomNameCell.style.color = "#ccc"; // Lighter font color for contrast
+                    roomNameCell.style.fontSize = "12px"; // Smaller font size
+                    roomNameCell.style.fontWeight = "bold";
+                    roomNameCell.style.textAlign = "center";
+                    roomNameCell.style.padding = "5px";
+                    roomNameCell.style.backgroundColor = "#222"; // Darker background for room name
+                    roomNameCell.style.borderRadius = "5px";
+                    roomNameCell.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.3)";
+                    rowContainer.appendChild(roomNameCell);
+
+                    // Sensor data blocks column
+                    const sensorBlocks = document.createElement("div");
+                    sensorBlocks.style.display = "grid";
+                    sensorBlocks.style.gridTemplateColumns = "repeat(10, 1fr)"; // 10 blocks per row
+                    sensorBlocks.style.gap = "3px"; // Decreased gap between blocks
+
+                    // Generate 10 blocks for this room's sensor data
+                    for (let i = 0; i < 10; i++) {
+                        const block = document.createElement("div");
+                        block.style.width = "100%";
+                        block.style.height = "30px"; // Smaller block height
+                        block.style.backgroundImage = "linear-gradient(to top, #ff4d4d, #4caf50)"; // Green-to-red gradient
+                        block.style.borderRadius = "4px";
+                        block.style.transition = "transform 0.2s, box-shadow 0.2s";
+                        block.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
+
+                        // Modify gradient color based on sensor value
+                        const sensorValue = room.sensor_values ? room.sensor_values[i] : 0;
+                        const greenToRed = `linear-gradient(to top, rgba(255, 77, 77, ${sensorValue}), rgba(76, 175, 80, ${1 - sensorValue}))`;
+                        block.style.backgroundImage = greenToRed;
+
+                        // Add hover effect
+                        block.addEventListener("mouseenter", () => {
+                            block.style.transform = "scale(1.05)"; // Slightly smaller scale effect
+                            block.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.4)";
+                        });
+                        block.addEventListener("mouseleave", () => {
+                            block.style.transform = "scale(1)";
+                            block.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
+                        });
+
+                        sensorBlocks.appendChild(block);
+                    }
+
+                    rowContainer.appendChild(sensorBlocks);
+                    heatmapContainer.appendChild(rowContainer);
+                });
+            })
+            .catch(error => console.error("Error fetching sensor data:", error));
+    });
+
+
+
+
+
+
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     function fetchSensorData() {
+    //         fetch(`/get_combined_sensor_data/`)
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 const sensorData = data.sensor_data;
+
+    //                 // Calculate the total alerts across all rooms
+    //                 let totalAlerts = 0;
+    //                 sensorData.forEach(sensor => {
+    //                     totalAlerts += sensor.temperature_alerts +
+    //                         sensor.humidity_alerts +
+    //                         sensor.door_alerts +
+    //                         sensor.motion_alerts +
+    //                         sensor.gas_alerts +
+    //                         sensor.flood_alerts;
+    //                 });
+
+    //                 // Update the "Total Alerts" count
+    //                 const totalAlertsElement = document.getElementById('totalAlertsCount');
+    //                 totalAlertsElement.innerText = `alerts : ${totalAlerts}`;
+
+    //                 // Other existing code for displaying sensor data
+    //                 const sortedData = sensorData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    //                 updateHexsecondGrid(sortedData);
+    //             })
+    //             .catch(error => console.error('Error fetching sensor data:', error));
+    //     }
+
+    //     fetchSensorData();
+    //     setInterval(fetchSensorData, 5000); // Refresh every 5 seconds
+    // });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        function fetchSensorData() {
+            fetch(`/get_combined_sensor_data/`)
+                .then(response => response.json())
+                .then(data => {
+                    const sensorData = data.sensor_data;
+
+                    // Calculate the total alerts across all rooms
+                    let totalAlerts = 0;
+                    let totalUnviewedAlerts = 0; // Track unviewed alerts
+
+                    sensorData.forEach(sensor => {
+                        totalAlerts += sensor.temperature_alerts +
+                            sensor.humidity_alerts +
+                            sensor.door_alerts +
+                            sensor.motion_alerts +
+                            sensor.gas_alerts +
+                            sensor.flood_alerts;
+
+                        totalUnviewedAlerts += sensor.unviewed_alerts_count; // Sum unviewed alerts
+                    });
+
+                    // Update the "Total Alerts" count
+                    document.getElementById('totalAlertsCount').innerText = `alerts : ${totalAlerts}`;
+
+                    // Update the "Unviewed Alerts" count
+                    const unviewedAlertsElement = document.querySelector('.unviewed-alerts-count');
+                    unviewedAlertsElement.innerText = `Alerts: ${totalUnviewedAlerts}`;
+                })
+                .catch(error => console.error('Error fetching sensor data:', error));
+        }
+
+        fetchSensorData();
+        setInterval(fetchSensorData, 5000); // Refresh every 5 seconds
+    });
+
+
+
+    function fetchTemperatureData() {
+        fetch('/get-temperature-data/') // URL to your Django view
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('temperature-bars');
+                container.innerHTML = ''; // Clear previous data
+
+                // Sort data: threshold exceeded (top), mid-range (middle), normal (bottom)
+                const sortedData = [...data.temperatures].sort((a, b) => {
+                    const aPriority = a.temperature >= a.temperature_threshold ? 0 : a.temperature_threshold - a.temperature > 5 ? 1 : 2;
+                    const bPriority = b.temperature >= b.temperature_threshold ? 0 : b.temperature_threshold - b.temperature > 5 ? 1 : 2;
+                    return aPriority - bPriority;
+                });
+
+                sortedData.forEach(room => {
+                    const temperaturePercentage = room.temperature;
+                    const thresholdPercentage = room.temperature_threshold;
+                    const isAboveThreshold = temperaturePercentage >= thresholdPercentage;
+
+                    container.innerHTML += `
+                    <div style="margin-bottom: 20px;">
+                        <div style="margin-bottom: 5px; font-weight: bold; font-size: 14px;">
+                            ${room.room_name}  <!-- Room name displayed here -->
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div style="flex: 1; position: relative; width: 50%;">
+                                <div class="progress" style="height: 8px; width: 100%;">
+                                    <div class="progress-bar ${isAboveThreshold ? 'bg-danger' : 'bg-success'}" 
+                                        style="width: ${temperaturePercentage}%" 
+                                        role="progressbar" 
+                                        aria-valuenow="${temperaturePercentage}" 
+                                        aria-valuemin="0" 
+                                        aria-valuemax="100"></div>
+                                    <div style="position: absolute; left: ${thresholdPercentage}%; top: 0; bottom: 0; 
+                                        width: 2px; background: ${isAboveThreshold ? 'red' : 'black'};">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-left: 20px; text-align: right;">
+                                <span>Threshold: <strong>${room.temperature_threshold}°C</strong></span><br>
+                                <span>Live: <strong style="color: ${isAboveThreshold ? 'red' : 'green'};">${room.temperature}°C</strong></span>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            })
+            .catch(error => console.error('Error fetching temperature data:', error));
+    }
+
+    // Fetch data every 5 seconds
+    setInterval(fetchTemperatureData, 5000);
+    fetchTemperatureData();
+
+
+
+
+    function fetchHumidityData() {
+        fetch('/get-humidity-data/') // URL to your Django view
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('humidity-bars');
+                container.innerHTML = ''; // Clear previous data
+
+                // Sort data: threshold exceeded (top), mid-range (middle), normal (bottom)
+                const sortedData = [...data.humidities].sort((a, b) => {
+                    const aPriority = a.humidity >= a.humidity_threshold ? 0 : a.humidity_threshold - a.humidity > 5 ? 1 : 2;
+                    const bPriority = b.humidity >= b.humidity_threshold ? 0 : b.humidity_threshold - b.humidity > 5 ? 1 : 2;
+                    return aPriority - bPriority;
+                });
+
+                sortedData.forEach(room => {
+                    const humidityPercentage = room.humidity;
+                    const thresholdPercentage = room.humidity_threshold;
+                    const isAboveThreshold = humidityPercentage >= thresholdPercentage;
+
+                    container.innerHTML += `
+                    <div style="margin-bottom: 20px;">
+                        <div style="margin-bottom: 5px; font-weight: bold; font-size: 14px;">
+                            ${room.room_name}  <!-- Room name displayed here -->
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div style="flex: 1; position: relative; width: 50%;">
+                                <div class="progress" style="height: 8px; width: 100%;">
+                                    <div class="progress-bar ${isAboveThreshold ? 'bg-danger' : 'bg-info'}" 
+                                        style="width: ${humidityPercentage}%" 
+                                        role="progressbar" 
+                                        aria-valuenow="${humidityPercentage}" 
+                                        aria-valuemin="0" 
+                                        aria-valuemax="100"></div>
+                                    <div style="position: absolute; left: ${thresholdPercentage}%; top: 0; bottom: 0; 
+                                        width: 2px; background: ${isAboveThreshold ? 'red' : 'black'};">
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-left: 20px; text-align: right;">
+                                <span>Threshold: <strong>${room.humidity_threshold}%</strong></span><br>
+                                <span>Live: <strong style="color: ${isAboveThreshold ? 'red' : 'green'};">${room.humidity}%</strong></span>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+            })
+            .catch(error => console.error('Error fetching humidity data:', error));
+    }
+
+    // Fetch data every 5 seconds
+    setInterval(fetchHumidityData, 5000);
+    fetchHumidityData();
+
+
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const hexsecondGrid = document.getElementById('hexsecond-grid');
+
+        function createHexagonsecond(roomName, alertActive) {
+            const hexsecond = document.createElement('div');
+            hexsecond.classList.add('hexsecond');
+            hexsecond.classList.add(alertActive ? 'red' : 'green');
+            hexsecond.innerText = roomName;
+            return hexsecond;
+        }
+
+        function updateHexsecondGrid(sensorData) {
+            hexsecondGrid.innerHTML = ''; // Clear existing hexagons
+            sensorData.forEach(sensor => {
+                const alertActive =
+                    sensor.temperature_exceeds ||
+                    sensor.humidity_exceeds ||
+                    sensor.door_opened ||
+                    sensor.motion_detected ||
+                    sensor.gas_detected ||
+                    sensor.flood_detected;
+
+                const hexsecond = createHexagonsecond(sensor.room_name, alertActive);
+                hexsecondGrid.appendChild(hexsecond);
+            });
+        }
+
+        function fetchSensorData() {
+            fetch(`/get_combined_sensor_data/`)
+                .then(response => response.json())
+                .then(data => {
+                    const sortedData = data.sensor_data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                    updateHexsecondGrid(sortedData);
+                })
+                .catch(error => console.error('Error fetching sensor data:', error));
+        }
+
+        // Fetch data initially and then every 5 seconds
+        fetchSensorData();
+        setInterval(fetchSensorData, 5000);
+    });
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        function fetchSensorData() {
+            fetch(`/get_combined_sensor_data/`)
+                .then(response => response.json())
+                .then(data => {
+                    const sensorReadingsBody = document.getElementById('sensorReadingsBody');
+                    const sensorMetadataBody = document.getElementById('sensorMetadataBody');
+                    const sensorPastAlertBody = document.getElementById('sensorpastalertBody');
+
+                    // Clear previous data
+                    sensorReadingsBody.innerHTML = '';
+                    sensorMetadataBody.innerHTML = '';
+                    sensorPastAlertBody.innerHTML = '';
+
+                    // Sort the sensor data by the alert status and timestamp
+                    const sortedData = data.sensor_data.sort((a, b) => {
+                        // Prioritize by whether there is an alert (true first)
+                        const alertA = a.temperature_exceeds || a.humidity_exceeds || a.door_opened || a.motion_detected || a.gas_detected || a.flood_detected;
+                        const alertB = b.temperature_exceeds || b.humidity_exceeds || b.door_opened || b.motion_detected || b.gas_detected || b.flood_detected;
+
+                        if (alertA && !alertB) return -1;
+                        if (!alertA && alertB) return 1;
+
+                        // Sort by timestamp (newest first)
+                        return new Date(b.timestamp) - new Date(a.timestamp);
+                    });
+
+                    // Populate data for each sensor, based on sorted data
+                    sortedData.forEach(sensor => {
+                        // Card 1: Live Sensor Readings with alert highlighting
+                        const readingsRow = document.createElement('tr');
+                        readingsRow.innerHTML = `
+                        <td style="background: linear-gradient(${sensor.temperature_exceeds ? '#4a1c40, #e63946' : '#005f56, #3ded97'}); color: white;">
+                            ${sensor.temperature}
+                        </td>
+                        <td style="background: linear-gradient(${sensor.humidity_exceeds ? '#4a1c40, #e63946' : '#005f56, #3ded97'}); color: white;">
+                            ${sensor.humidity}
+                        </td>
+                        <td style="background: linear-gradient(${sensor.door_opened ? '#4a1c40, #e63946' : '#005f56, #3ded97'}); color: white;">
+                            ${sensor.door_opened ? 'opened' : 'closed'}
+                        </td>
+                        <td style="background: linear-gradient(${sensor.motion_detected ? '#4a1c40, #e63946' : '#005f56, #3ded97'}); color: white;">
+                            ${sensor.motion_detected ? 'motion' : 'no motion'}
+                        </td>
+                        <td style="background: linear-gradient(${sensor.gas_detected ? '#4a1c40, #e63946' : '#005f56, #3ded97'}); color: white;">
+                            ${sensor.gas_detected ? 'gas' : 'no gas'}
+                        </td>
+                        <td style="background: linear-gradient(${sensor.flood_detected ? '#4a1c40, #e63946' : '#005f56, #3ded97'}); color: white;">
+                            ${sensor.flood_detected ? 'flood' : 'no flood'}
+                        </td>
+                    `;
+                        sensorReadingsBody.appendChild(readingsRow);
+
+                        // Card 2: Sensor Metadata (Building, Room, Status)
+                        const metadataRow = document.createElement('tr');
+                        metadataRow.innerHTML = `
+                        <td>${sensor.building_names.join(', ')}</td>
+                        <td>${sensor.room_name}</td>
+                        <td style="color: ${sensor.status === "Active" ? "green" : "red"};">
+                            ${sensor.status}
+                        </td>
+                        <td>${sensor.timestamp}</td>
+                    `;
+                        sensorMetadataBody.appendChild(metadataRow);
+
+                        // Card 3: Total Alerts in 24 Hours
+                        const pastAlertRow = document.createElement('tr');
+                        pastAlertRow.innerHTML = `
+                        <td>${sensor.temperature_alerts}</td>
+                        <td>${sensor.humidity_alerts}</td>
+                        <td>${sensor.door_alerts}</td>
+                        <td>${sensor.motion_alerts}</td>
+                        <td>${sensor.gas_alerts}</td>
+                        <td>${sensor.flood_alerts}</td>
+                    `;
+                        sensorPastAlertBody.appendChild(pastAlertRow);
+                    });
+                });
+        }
+
+        fetchSensorData();
+        setInterval(fetchSensorData, 5000);
+    });
+
+
+
+
+
+</script>
+
+
+{% endblock %}

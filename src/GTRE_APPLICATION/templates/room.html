@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NxtEye</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0b151f;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 150px;
+            color: rgb(230, 72, 14); /* Blue color for contrast */
+        }
+
+        .login-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2d3845;
+            color:  rgb(230, 72, 14);
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-button:hover {
+            background-color: rgb(82, 30, 12);
+        }
+
+        /* Animation for the logo */
+        .logo {
+            width: 225px;
+            height: 220px;
+            border-radius: 50%;
+            animation: growAndShrink 2s ease-in-out; /* Animation duration and timing function */
+        }
+
+        @keyframes growAndShrink {
+            0% {
+                transform: scale(1); /* Start size */
+            }
+            50% {
+                transform: scale(1.2); /* Max size */
+            }
+            100% {
+                transform: scale(1); /* Back to normal size */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- <img src="{% static 'admin/img/nxteyelogo.png' %}" alt="Logo" class="logo"> -->
+    <img src="{% static 'admin/img/Nxteye-Logo-02.png' %}" alt="Logo" class="logo">
+    <h2> Nxt<span style="font-style: italic;">E</span>ye CIMS</h2>
+    <!-- Button to go back to home page -->
+    <a href="{% url 'home' %}" class="login-button">Login</a>
+</div>
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,509 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% get_static_prefix as static %}
+
+{% block content %}
+
+
+<div class="col-md-12">
+    <div class="nav-align-top nav-tabs-shadow mb-4">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="navs-top-cluster" role="tabpanel">
+                <div class="tabcamz">
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <div class="card card-border-shadow-primary">
+                                <div class="card-header bg-primary text-white text-center">
+                                    <h4>Overview </h4>
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="cluster-overview-container">
+                                        <h5 class="mb-4 text-primary text-center"></h5>
+
+                                        <!-- Room stats section -->
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-1">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <i class="bx bx-home bx-lg text-primary mb-2"></i>
+                                                        <small class="text-muted">Total Users</small>
+                                                        <h3 class="text-primary">{{ sub_admin_count }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-1">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <i class="bx bx-home bx-lg text-primary mb-2"></i>
+                                                        <small class="text-muted">Suspended Users</small>
+                                                        <h3 class="text-primary">{{ suspended_sub_admin_count }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-1">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <i class="bx bx-home bx-lg text-primary mb-2"></i>
+                                                        <small class="text-muted">Total Rooms</small>
+                                                        <h3 class="text-primary">{{ total_buildings }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-1">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <i class="bx bx-home bx-lg text-primary mb-2"></i>
+                                                        <small class="text-muted">Total Devices</small>
+                                                        <h3 class="text-primary">{{ total_rooms }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-1">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <i class="bx bx-bulb bx-lg text-success mb-2"></i>
+                                                        <small class="text-muted">Active Devices</small>
+                                                        <h3 class="text-success">{{ active_rooms }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-1">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <i class="bx bx-power-off bx-lg text-danger mb-2"></i>
+                                                        <small class="text-muted">Inactive Devices</small>
+                                                        <h3 class="text-danger">{{ inactive_rooms }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-1">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <i class="bx bx-alert-circle bx-lg text-warning mb-2"></i>
+                                                        <small class="text-muted">Alert Devices</small>
+                                                        <h3 class="text-danger">{{ alert_devices }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-1">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <i class="bx bx-battery-charge bx-lg text-info mb-2"></i>
+                                                        <small class="text-muted">Power Devices</small>
+                                                        <h3 class="text-danger">{{ power_devices }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-1">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <i class="bx bx-battery-charge bx-lg text-info mb-2"></i>
+                                                        <small class="text-muted">Total Clusters</small>
+                                                        <h3 class="text-danger">{{ total_clusters }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-1">
+                                              <div class="card text-center">
+                                                  <div class="card-body">
+                                                      <i class="bx bx-battery-charge bx-lg text-info mb-2"></i>
+                                                      <small class="text-muted">empty</small>
+                                                      <h3 class="text-danger"> </h3>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      
+                                          <div class="col-md-1">
+                                              <div class="card text-center">
+                                                  <div class="card-body">
+                                                      <i class="bx bx-battery-charge bx-lg text-info mb-2"></i>
+                                                      <small class="text-muted">empty</small>
+                                                      <h3 class="text-danger"> </h3>
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          <div class="col-md-1">
+                                            <div class="card text-center">
+                                                <div class="card-body">
+                                                    <i class="bx bx-battery-charge bx-lg text-info mb-2"></i>
+                                                    <small class="text-muted"> empty</small>
+                                                    <h3 class="text-danger"> </h3> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+
+
+
+                                        <!-- <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="nav-align-top nav-tabs-shadow mb-4">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade show active" id="navs-top-cluster" role="tabpanel">
+                                                    <div class="tabcamz">
+                                                        <div class="row">
+                                                        <div class="col-lg-12 mb-4">
+                                                            <div class="card card-border-shadow-primary">
+                                                            <div class="card-body p-4">
+                                                                <div class="cluster-overview-container">
+                                                                <h4 class="mb-4 text-primary text-center">Overview</h4>
+                                            
+                                                                <div class="row">
+                                                                    <div class="col-md-6 col-12 mb-4">
+                                                                        <div class="card">
+                                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                                            <h5 class="card-title mb-0">Devices</h5>
+                                                                           
+                                                                        </div>
+                                                                      
+                                                                        </div>
+                                                                    </div>
+                                                    
+                                                                    <div class="col-md-6 col-12 mb-4">
+                                                                        <div class="card">
+                                                                        <div class="card-header d-flex align-items-center justify-content-between">
+                                                                            <h5 class="card-title mb-0">Statistics</h5>
+                                                                            
+                                                                        </div>
+                                                                        
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                                </div>
+                                                                
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-12 mb-4">
+                                                                    <div class="card">
+                                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                                            <h5 class="card-title mb-0">Alerts Distribution</h5>
+                                                                        </div>
+                                                                        <div id="pieChart"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-12 mb-4">
+                                                                    <div class="card">
+                                                                        <div class="card-header d-flex align-items-center justify-content-between">
+                                                                            <h5 class="card-title mb-0">Alert Statistics</h5>
+                                                                        </div>
+                                                                        <div id="radialBarChart"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+
+
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div> -->
+                                    
+                                      
+
+                                        <!-- Room details section -->
+                                        <div class="row">
+                                          <div class="col-md-12">
+                                            <div class="nav-align-top nav-tabs-shadow mb-4">
+                                              <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="navs-top-cluster" role="tabpanel">
+                                                  <div class="tabcamz">
+                                                    <div class="row">
+                                                      <div class="col-lg-12 mb-4">
+                                                        <div class="card card-border-shadow-primary">
+                                                          <div class="card-body p-4">
+                                                            <div class="cluster-overview-container">
+                                                              <h4 class="mb-4 text-primary text-center">Cluster Overview</h4>
+                                        
+                                                              <div class="row">
+                                                                <div class="d-flex flex-wrap justify-content-center gap-4">
+                                                                  {% for cluster in clusters %}
+                                                                  <div class="card cluster-card flex-grow-1 card-border-shadow-info" style="max-width: 400px; min-width: 300px;">
+                                                                    <div class="card-body">
+                                                                      <h5 class="text-center mb-3 text-info">
+                                                                        <i class="fa fa-layer-group me-2"></i>{{ cluster.name }}
+                                                                      </h5>
+                                        
+                                                                      <!-- Rooms Section -->
+                                                                      <div class="mb-3">
+                                                                        <h6 class="text-secondary text-uppercase">Rooms</h6>
+                                                                        <div class="d-flex flex-wrap gap-2 justify-content-start">
+                                                                          {% for room in cluster.rooms.all %}
+                                                                          <div class="card room-card card-border-shadow-danger" style="flex-basis: 48%; max-width: 48%;">
+                                                                            <div class="card-body p-2 text-center">
+                                                                              <i class="fa fa-microchip mb-2 text-danger"></i>
+                                                                              <h6 class="room-title">{{ room.name }}</h6>
+                                                                            </div>
+                                                                          </div>
+                                                                          {% empty %}
+                                                                          <p class="text-muted">No rooms available.</p>
+                                                                          {% endfor %}
+                                                                        </div>
+                                                                      </div>
+                                        
+                                                                      <!-- Buildings Section -->
+                                                                      <div class="mb-3">
+                                                                        <h6 class="text-secondary text-uppercase">Buildings</h6>
+                                                                        <div class="d-flex flex-wrap gap-2 justify-content-start">
+                                                                          {% for building in cluster.buildings.all %}
+                                                                          <div class="card building-card card-border-shadow-warning" style="flex-basis: 48%; max-width: 48%;">
+                                                                            <div class="card-body p-2 text-center">
+                                                                              <i class="fa fa-building mb-2 text-warning"></i>
+                                                                              <h6 class="room-title">{{ building.name }}</h6>
+                                                                            </div>
+                                                                          </div>
+                                                                          {% empty %}
+                                                                          <p class="text-muted">No buildings available.</p>
+                                                                          {% endfor %}
+                                                                        </div>
+                                                                      </div>
+                                        
+                                                                      <!-- Power Modules Section -->
+                                                                      <div class="mb-3">
+                                                                        <h6 class="text-secondary text-uppercase">Power Modules</h6>
+                                                                        <div class="d-flex flex-wrap gap-2 justify-content-start">
+                                                                          {% for power_module in cluster.power_modules.all %}
+                                                                          <div class="card power-card card-border-shadow-success" style="flex-basis: 48%; max-width: 48%;">
+                                                                            <div class="card-body p-2 text-center">
+                                                                              <i class="fa fa-plug mb-2 text-success"></i>
+                                                                              <h6 class="room-title">{{ power_module.name }}</h6>
+                                                                            </div>
+                                                                          </div>
+                                                                          {% empty %}
+                                                                          <p class="text-muted">No power modules available.</p>
+                                                                          {% endfor %}
+                                                                        </div>
+                                                                      </div>
+                                        
+                                                                      <!-- Sub Admins Section -->
+                                                                      <div class="mb-3">
+                                                                        <h6 class="text-secondary text-uppercase">Sub Admins</h6>
+                                                                        <div class="d-flex flex-wrap gap-2 justify-content-start">
+                                                                          {% for sub_admin in cluster.sub_admins.all %}
+                                                                          <div class="card sub-admin-card card-border-shadow-primary" style="flex-basis: 48%; max-width: 48%;">
+                                                                            <div class="card-body p-2 text-center">
+                                                                              <i class="fa fa-user mb-2 text-primary"></i>
+                                                                              <h6 class="room-title">{{ sub_admin.name }}</h6>
+                                                                            </div>
+                                                                          </div>
+                                                                          {% empty %}
+                                                                          <p class="text-muted">No sub admins available.</p>
+                                                                          {% endfor %}
+                                                                        </div>
+                                                                      </div>
+                                        
+                                                                      <!-- Main Admins Section -->
+                                                                      <div>
+                                                                        <h6 class="text-secondary text-uppercase">Main Admins</h6>
+                                                                        <div class="d-flex flex-wrap gap-2 justify-content-start">
+                                                                          {% for main_admin in cluster.main_admins.all %}
+                                                                          <div class="card main-admin-card card-border-shadow-info" style="flex-basis: 48%; max-width: 48%;">
+                                                                            <div class="card-body p-2 text-center">
+                                                                              <i class="fa fa-user-tie mb-2 text-info"></i>
+                                                                              <h6 class="room-title">{{ main_admin.name }}</h6>
+                                                                            </div>
+                                                                          </div>
+                                                                          {% empty %}
+                                                                          <p class="text-muted">No main admins available.</p>
+                                                                          {% endfor %}
+                                                                        </div>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                  {% empty %}
+                                                                  <p class="text-muted">No clusters available.</p>
+                                                                  {% endfor %}
+                                                                </div>
+                                                              </div>
+                                                              
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                           
+                                        </div>
+
+                                    </div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+<script>
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Define color variables based on the style theme
+    let cardColor, headingColor, labelColor, legendColor, borderColor;
+
+    if (isDarkStyle) {
+        cardColor = config.colors_dark.cardColor;
+        headingColor = config.colors_dark.headingColor;
+        labelColor = config.colors_dark.textMuted;
+        legendColor = config.colors_dark.bodyColor;
+        borderColor = config.colors_dark.borderColor;
+    } else {
+        cardColor = config.colors.cardColor;
+        headingColor = config.colors.headingColor;
+        labelColor = config.colors.textMuted;
+        legendColor = config.colors.bodyColor;
+        borderColor = config.colors.borderColor;
+    }
+
+    // Define chart-specific colors for series
+    const chartColors = {
+        temperature: '#3f51b5', // Temperature
+        humidity: '#00bcd4',    // Humidity
+        door: '#ff5722',        // Door
+        flood: '#4caf50',       // Flood
+        pir: '#9c27b0',         // PIR
+        gas: '#ffc107',         // Gas
+        background: '#e3f2fd'   // Light Blue Background
+    };
+
+    // Fetch the data and render the charts
+    fetch('/api/alert-stats/')
+        .then(response => response.json())
+        .then(data => {
+            // Pie Chart Data (distribution of alert types)
+            const alertTypes = data.alert_types.map(alert => alert.type);
+            const alertCounts = data.alert_types.map(alert => alert.count);
+
+            const pieChartOptions = {
+                chart: {
+                    type: 'pie',
+                    height: 350,
+                    background: cardColor
+                },
+                series: alertCounts,
+                labels: alertTypes,
+                colors: [
+                    chartColors.temperature,
+                    chartColors.humidity,
+                    chartColors.door,
+                    chartColors.flood,
+                    chartColors.pir,
+                    chartColors.gas
+                ],
+                title: {
+                    text: 'Alerts Distribution',
+                    align: 'center',
+                    style: {
+                        color: headingColor,
+                        fontSize: '18px',
+                        fontWeight: 'bold'
+                    }
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        colors: legendColor,
+                        useSeriesColors: false
+                    }
+                },
+                dataLabels: {
+                    style: {
+                        colors: [labelColor]
+                    }
+                }
+            };
+            const pieChart = new ApexCharts(document.querySelector("#pieChart"), pieChartOptions);
+            pieChart.render();
+
+            // Radial Bar Chart Data (percentage viewed/unviewed)
+            const radialBarChartOptions = {
+                chart: {
+                    type: 'radialBar',
+                    height: 350,
+                    background: cardColor
+                },
+                series: [data.percentage_viewed, data.percentage_unviewed],
+                labels: ['Viewed', 'Unviewed'],
+                colors: [chartColors.humidity, chartColors.pir],
+                title: {
+                    text: 'Alert Statistics',
+                    align: 'center',
+                    style: {
+                        color: headingColor,
+                        fontSize: '18px',
+                        fontWeight: 'bold'
+                    }
+                },
+                plotOptions: {
+                    radialBar: {
+                        dataLabels: {
+                            name: {
+                                color: labelColor,
+                                fontSize: '16px'
+                            },
+                            value: {
+                                color: labelColor,
+                                fontSize: '14px'
+                            },
+                            total: {
+                                show: true,
+                                label: 'Total',
+                                color: labelColor,
+                                formatter: function (w) {
+                                    return data.percentage_viewed + data.percentage_unviewed + '%';
+                                }
+                            }
+                        }
+                    }
+                },
+                legend: {
+                    show: true,
+                    position: 'bottom',
+                    labels: {
+                        colors: legendColor
+                    }
+                }
+            };
+            const radialBarChart = new ApexCharts(document.querySelector("#radialBarChart"), radialBarChartOptions);
+            radialBarChart.render();
+        })
+        .catch(error => console.error('Error fetching alert data:', error));
+});
+
+
+</script>
+
+
+
+{% endblock %}

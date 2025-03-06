@@ -1,0 +1,55 @@
+
+
+
+
+
+version: "3.9"
+
+services:
+  django:
+    build: .
+    image: django-app:latest
+    container_name: django-container
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app  # Mount the current directory to /app in the container
+    restart: always  
+    environment:
+      - MYSQL_DATABASE=ivasystems  # Database name
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=bibinjfredy1998
+      - MYSQL_HOST=mysql  # Service name in Docker Compose
+    depends_on:
+      - mysql
+    command: ["/app/wait-for-mysql.sh", "mysql", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    networks:
+      - gtre-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: bibinjfredy1998  # Root password
+      MYSQL_DATABASE: ivasystems  # Database name
+    ports:
+      - "3307:3306"  # Expose 3306 internally and map to 3307 externally
+    # volumes:
+    #   - mysql_data:/var/lib/mysql
+
+    #volume mount in the project folder automatic 
+
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+
+    networks:
+      - gtre-network
+
+volumes:
+  mysql_data:
+
+networks:
+  gtre-network:
+    driver: bridge

@@ -1,0 +1,1412 @@
+
+{% extends 'base2.html' %}
+{% load static %}
+{% get_static_prefix as static %}
+
+
+{% block content %}
+
+
+
+<div class="container-fluid flex-grow-1 container-p-y">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="nav-align-top nav-tabs-shadow mb-4">
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
+            <div class="tabcamz">
+              <div class="row">
+
+                <!-- <div class="col-sm-6 col-lg-3 mb-4">
+                  <div class="card card-border-shadow-primary shtboxz">
+                    <div class="card-body p-3">
+                      <h5 class="mb-2">Total Alerts</h5>
+                      <div class="d-flex justify-content-between align-items-center mb-0">
+                        <div class="lefend">
+                          <div id="loading" class="text-center mb-3">
+                            <div class="loading-spinner"></div>
+                          </div>
+                          <h4 class="mb-0" id="total">{{ alerts_count }}</h4>
+                        </div>
+                        <div class="jusend">
+                          <button type="button" class="btn btn-label-primary waves-effect">All</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-4">
+                  <div class="card card-border-shadow-warning shtboxz">
+                    <div class="card-body p-3">
+                      <h5 class="mb-2">Active Alerts</h5>
+                      <div class="d-flex justify-content-between align-items-center mb-0">
+                        <div class="lefend">
+                          <h4 class="mb-0" id="active">{{ active_alerts_count }}</h4>
+                        </div>
+                        <div class="jusend">
+                          <button type="button" class="btn btn-label-warning waves-effect">Active</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-4">
+                  <div class="card card-border-shadow-danger shtboxz">
+                    <div class="card-body p-3">
+                      <h5 class="mb-2">Resolved Alerts</h5>
+                      <div class="d-flex justify-content-between align-items-center mb-0">
+                        <div class="lefend">
+                          <h4 class="mb-0" id="resolved">{{ resolved_alerts_count }}</h4>
+                        </div>
+                        <div class="jusend">
+                          <button type="button" class="btn btn-label-danger waves-effect">Inactive</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-4">
+                  <div class="card card-border-shadow-danger shtboxz">
+                    <div class="card-body p-3">
+                      <h5 class="mb-2">Pending Alerts</h5>
+                      <div class="d-flex justify-content-between align-items-center mb-0">
+                        <div class="lefend">
+                          <h4 class="mb-0" id="pending">{{ pending_alerts_count }}</h4>
+                        </div>
+                        <div class="jusend">
+                          <button type="button" class="btn btn-label-danger waves-effect">Pending</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="col-sm-6 col-lg-3 mb-4">
+                  <div class="card card-border-shadow-primary shtboxz">
+                    <div class="card-body p-3">
+                      <h5 class="mb-2">Total Alerts</h5>
+                      <div class="d-flex justify-content-between align-items-center mb-0">
+                        <div class="lefend">
+                          <div id="loading" class="text-center mb-3">
+                            <div class="loading-spinner"></div>
+                          </div>
+                          <h4 class="mb-0" id="total"></h4> <!-- Ensure this id matches -->
+                        </div>
+                        <div class="jusend">
+                          <button type="button" class="btn btn-label-primary waves-effect">All</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-sm-6 col-lg-3 mb-4">
+                  <div class="card card-border-shadow-warning shtboxz">
+                    <div class="card-body p-3">
+                      <h5 class="mb-2">Active Alerts</h5>
+                      <div class="d-flex justify-content-between align-items-center mb-0">
+                        <div class="lefend">
+                          <h4 class="mb-0" id="active"></h4> <!-- Ensure this id matches -->
+                        </div>
+                        <div class="jusend">
+                          <button type="button" class="btn btn-label-warning waves-effect">Active</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-sm-6 col-lg-3 mb-4">
+                  <div class="card card-border-shadow-danger shtboxz">
+                    <div class="card-body p-3">
+                      <h5 class="mb-2">Resolved Alerts</h5>
+                      <div class="d-flex justify-content-between align-items-center mb-0">
+                        <div class="lefend">
+                          <h4 class="mb-0" id="resolved"></h4> <!-- Ensure this id matches -->
+                        </div>
+                        <div class="jusend">
+                          <button type="button" class="btn btn-label-danger waves-effect">Inactive</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-sm-6 col-lg-3 mb-4">
+                  <div class="card card-border-shadow-danger shtboxz">
+                    <div class="card-body p-3">
+                      <h5 class="mb-2">Pending Alerts</h5>
+                      <div class="d-flex justify-content-between align-items-center mb-0">
+                        <div class="lefend">
+                          <h4 class="mb-0" id="pending"></h4> <!-- Ensure this id matches -->
+                        </div>
+                        <div class="jusend">
+                          <button type="button" class="btn btn-label-danger waves-effect">Pending</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                
+              </div> <!-- row -->
+            </div> <!-- tabcamz -->
+          </div> <!-- tab-pane -->
+        </div> <!-- tab-content -->
+      </div> <!-- nav-align-top -->
+    </div> <!-- col-md-12 -->
+  </div> <!-- row -->
+
+  <!-- <div class="row">
+    <div class="col-md-12">
+        <div class="nav-align-top nav-tabs-shadow mb-4">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
+                    <div class="tabcamz">
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-12 mb-4">
+                                <div class="card card-border-shadow-primary shtboxz">
+                                    <div class="card-body p-3">
+                                        <div class="rooms-overview-container">
+                                            <h4>Rooms Overview</h4>
+                                            <div class="notice">
+                                                <div class="status-item">
+                                                    <span class="dottt white-dottt"></span> Sensor Off
+                                                </div>
+                                                <div class="status-item">
+                                                    <span class="dottt green-dottt"></span> Normal
+                                                </div>
+                                                <div class="status-item">
+                                                    <span class="dottt red-dottt"></span> Alert
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="d-flex flex-wrap gap-3">
+                                                {% for building in buildings %}
+                                                  <div class="card building-card flex-grow-1 card-border-shadow-warning custom-card-shadow">
+                                                    <div class="card-body p-3">
+                                                        <h5 class="mb-2">
+                                                            <i class="fa fa-building" style="margin-right: 10px;"></i> {{ building.name }}
+                                                        </h5>
+
+                                                        <div class="rooms-section d-flex flex-wrap gap-3">
+                                                            {% for room in building.rooms.all %}
+                                                            <div class="room-card flex-grow-1">
+                                                                <div class="card card-border-shadow-danger shtboxz">
+                                                                    <div class="card-body p-3">
+                                                                        <h6 class="room-title text-center"><i class="fa fa-microchip" style="margin-right: 10px;"></i>{{ room.name }}</h6>
+                                                                        <small class="mb-2">live</small>
+
+                                                                        <div class="sensor-dots">
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-temperature-high"></i>
+                                                                                <div class="dot" id="temperature-dot-{{ room.id }}" data-sensor="temperature"></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-tint"></i>
+                                                                                <div class="dot" id="humidity-dot-{{ room.id }}" data-sensor="humidity"></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-water"></i>
+                                                                                <div class="dot" id="flood-dot-{{ room.id }}" data-sensor="flood"></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-fire"></i>
+                                                                                <div class="dot" id="gas-dot-{{ room.id }}" data-sensor="gas"></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-running"></i>
+                                                                                <div class="dot" id="motion-dot-{{ room.id }}" data-sensor="motion"></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-door-open"></i>
+                                                                                <div class="dot" id="door-dot-{{ room.id }}" data-sensor="door"></div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <small class="mb-2">Alert</small>
+
+                                                                        <div class="sensor-dotts">
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-temperature-high"></i>
+                                                                                <div class="dott" id="temperature-dott-{{ room.id }}" data-sensor="temperature"></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-tint"></i>
+                                                                                <div class="dott" id="humidity-dott-{{ room.id }}" data-sensor="humidity"></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-water"></i>
+                                                                                <div class="dott" id="flood-dott-{{ room.id }}" data-sensor="flood"></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-fire"></i>
+                                                                                <div class="dott" id="gas-dott-{{ room.id }}" data-sensor="gas"></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-running"></i>
+                                                                                <div class="dott" id="motion-dott-{{ room.id }}" data-sensor="motion"></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <i class="fa-solid fa-door-open"></i>
+                                                                                <div class="dott" id="door-dott-{{ room.id }}" data-sensor="door"></div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <small class="mb-2">Power</small>
+
+                                                                        <div class="sensor-dots">
+                                                                            <div class="sensor-icon">
+                                                                                <div id="-{{ room.id }}" data-sensor=""><h6>ct1</h6></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <div id="-{{ room.id }}" data-sensor=""><h6>ct2</h6></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <div id="-{{ room.id }}" data-sensor=""><h6>ct3</h6></div>
+                                                                            </div>
+                                                                            <div class="sensor-icon">
+                                                                                <div id="-{{ room.id }}" data-sensor=""><h6>ct4</h6></div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {% empty %}
+                                                            <p>No rooms available in this building.</p>
+                                                            {% endfor %}
+                                                        </div>
+
+                                                        <div class="d-flex justify-content-between align-items-center mb-0">
+                                                            <div class="lefend">
+                                                                <h4 class="mb-0" id="active"></h4>
+                                                            </div>
+
+                                                           
+                                                            <div class="d-flex justify-content-between align-items-center mb-0">
+                                                              <button onclick="viewAllAlerts({{ building.id }})" class="btn btn-label-danger waves-effect" style="margin-left: 10px;">
+                                                                  <i class="fas fa-sync-alt"></i> 
+                                                              </button>
+  
+                                                              <h4 class="mb-0" id="active"></h4>
+  
+                                                              <button type="button" class="btn btn-label-warning waves-effect" data-bs-toggle="modal" data-bs-target="#fullScreenModal" style="margin-right: 10px;">
+                                                                  <i class="fa fa-eye"></i>
+                                                              </button>
+                                                          </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="row">
+  <div class="col-md-12">
+      <div class="nav-align-top nav-tabs-shadow mb-4">
+          <div class="tab-content">
+              <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
+                  <div class="tabcamz">
+                      <div class="row">
+                          <div class="col-sm-6 col-lg-12 mb-4">
+                              <div class="card card-border-shadow-primary shtboxz">
+                                  <div class="card-body p-3">
+                                      <div class="rooms-overview-container">
+                                          <h4>Rooms Overview</h4>
+                                          <div class="notice">
+                                              <div class="status-item">
+                                                  <span class="dottt white-dottt"></span> Sensor Off
+                                              </div>
+                                              <div class="status-item">
+                                                  <span class="dottt green-dottt"></span> Normal
+                                              </div>
+                                              <div class="status-item">
+                                                  <span class="dottt red-dottt"></span> Alert
+                                              </div>
+
+                                              <div class="status-item">
+                                                <span class="dottt blue-dottt"></span> Power
+                                            </div>
+                                            <div class="status-item">
+                                              <span class="dottt black-dottt"></span> No Power
+                                          </div>
+
+                                          </div>
+                                      </div>
+
+                                      <div class="row">
+                                          <div class="d-flex flex-wrap gap-3">
+                                              {% for building in buildings %}
+                                              <!-- <div class="card building-card flex-grow-1 card-border-shadow-warning"> -->
+                                                <div class="card building-card flex-grow-1 card-border-shadow-warning custom-card-shadow">
+                                                  <div class="card-body p-3">
+                                                      <h5 class="mb-2">
+                                                          <i class="fa fa-building" style="margin-right: 10px;"></i> {{ building.name }}
+                                                      </h5>
+                                                      
+                                                    <!-- Power Module Information -->
+                                                    <div class="power-module-info mb-3">
+                                                        <h6>Connected Power Modules:</h6>
+                                                       
+                                                        <ul id="power-modules-{{ building.id }}">
+                                                          {% for power_module in building.power_modules.all %}
+                                                          <li id="power-module-{{ power_module.id }}-{{ building.id }}">
+                                                              {{ power_module.name }}
+                                                              <!-- <div>
+                                                                CT1:<span class="battery-icon" id="ct1-icon-{{ power_module.id }}-{{ building.id }}"></span> 
+                                                                  CT1: <span id="ct1-value-{{ power_module.id }}-{{ building.id }}"></span>
+                                                                  CT2:<span class="battery-icon" id="ct2-icon-{{ power_module.id }}-{{ building.id }}"></span> 
+                                                                  CT2: <span id="ct2-value-{{ power_module.id }}-{{ building.id }}"></span>
+                                                                  CT3:<span class="battery-icon" id="ct3-icon-{{ power_module.id }}-{{ building.id }}"></span> 
+                                                                  CT3: <span id="ct3-value-{{ power_module.id }}-{{ building.id }}"></span>
+                                                                  CT4:<span class="battery-icon" id="ct4-icon-{{ power_module.id }}-{{ building.id }}"></span> 
+                                                                  CT4: <span id="ct4-value-{{ power_module.id }}-{{ building.id }}"></span>
+                                                              </div> -->
+                                                              <!-- <div>
+                                                                CT1:<span class="battery-icon" id="ct1-icon-{{ power_module.id }}-{{ building.id }}"><i class="fas fa-bolt"></i></span> 
+                                                                CT2:<span class="battery-icon" id="ct2-icon-{{ power_module.id }}-{{ building.id }}"><i class="fas fa-bolt"></i></span> 
+                                                                CT3:<span class="battery-icon" id="ct3-icon-{{ power_module.id }}-{{ building.id }}"><i class="fas fa-bolt"></i></span> 
+                                                                CT4:<span class="battery-icon" id="ct4-icon-{{ power_module.id }}-{{ building.id }}"><i class="fas fa-bolt"></i></span> 
+                                                              </div> -->
+                                                              <div>
+                                                                <span id="ct1-name-{{ power_module.id }}-{{ building.id }}">{{ power_module.ct1correspondingname }}</span>: 
+                                                                <span class="battery-icon" id="ct1-icon-{{ power_module.id }}-{{ building.id }}">
+                                                                    <i class="fas fa-bolt"></i>
+                                                                </span>
+                                                                <span id="ct2-name-{{ power_module.id }}-{{ building.id }}">{{ power_module.ct2correspondingname }}</span>: 
+                                                                <span class="battery-icon" id="ct2-icon-{{ power_module.id }}-{{ building.id }}">
+                                                                    <i class="fas fa-bolt"></i>
+                                                                </span>
+                                                                <span id="ct3-name-{{ power_module.id }}-{{ building.id }}">{{ power_module.ct3correspondingname }}</span>: 
+                                                                <span class="battery-icon" id="ct3-icon-{{ power_module.id }}-{{ building.id }}">
+                                                                    <i class="fas fa-bolt"></i>
+                                                                </span>
+                                                                <span id="ct4-name-{{ power_module.id }}-{{ building.id }}">{{ power_module.ct4correspondingname }}</span>: 
+                                                                <span class="battery-icon" id="ct4-icon-{{ power_module.id }}-{{ building.id }}">
+                                                                    <i class="fas fa-bolt"></i>
+                                                                </span>
+                                                            </div>
+                                                            
+                                                            
+                                                          </li>
+                                                          {% empty %}
+                                                          <li>No power modules connected.</li>
+                                                          {% endfor %}
+                                                      </ul>
+                                                      
+                                                    </div>
+                                                    
+
+
+                                                 
+
+
+                                                  
+
+
+                                                      <div class="rooms-section d-flex flex-wrap gap-3">
+                                                          {% for room in building.rooms.all %}
+                                                          <div class="room-card flex-grow-1">
+                                                              <div class="card card-border-shadow-danger shtboxz">
+
+                                                                
+                                                                  <div class="card-body p-3">
+                                                                     
+                                                                      <div class="room-title-container">
+                                                                        <h6 class="room-title text-center">
+                                                                          <i class="fa fa-microchip" style="margin-right: 10px;"></i>{{ room.name }}
+                                                                        </h6>
+                                                                      </div>
+                                                                      <div class="indicators-container">
+                                                                        <div class="temperature-indicators">
+                                                                          <div class="indicator-heading">Temperature</div>
+                                                                          <span id="peak-temperature-{{ room.id }}" class="indicator peak"></span>
+                                                                          <span id="lowest-temperature-{{ room.id }}" class="indicator low"></span>
+                                                                        </div>
+                                                                        <div class="humidity-indicators">
+                                                                          <div class="indicator-heading">Humidity</div>
+                                                                          <span id="peak-humidity-{{ room.id }}" class="indicator peak"></span>
+                                                                          <span id="lowest-humidity-{{ room.id }}" class="indicator low"></span>
+                                                                        </div>
+                                                                      </div>
+                                                                      
+                                                                  
+
+                                                                      <small class="mb-2">Live</small>
+
+                                                                      <div class="sensor-dots">
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-temperature-high"></i>
+                                                                              <div class="dot" id="temperature-dot-{{ room.id }}" data-sensor="temperature"></div>
+                                                                              <!-- Peak and lowest temperature -->
+                                                                              
+                                                                          </div>
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-tint"></i>
+                                                                              <div class="dot" id="humidity-dot-{{ room.id }}" data-sensor="humidity"></div>
+                                                                              <!-- Peak and lowest humidity -->
+                                                                              
+                                                                          </div>
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-water"></i>
+                                                                              <div class="dot" id="flood-dot-{{ room.id }}" data-sensor="flood"></div>
+                                                                          </div>
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-fire"></i>
+                                                                              <div class="dot" id="gas-dot-{{ room.id }}" data-sensor="gas"></div>
+                                                                          </div>
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-running"></i>
+                                                                              <div class="dot" id="motion-dot-{{ room.id }}" data-sensor="motion"></div>
+                                                                          </div>
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-door-open"></i>
+                                                                              <div class="dot" id="door-dot-{{ room.id }}" data-sensor="door"></div>
+                                                                          </div>
+                                                                      </div>
+
+                                                                      <small class="mb-2">Alert</small>
+
+                                                                      <div class="sensor-dotts">
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-temperature-high"></i>
+                                                                              <div class="dott" id="temperature-dott-{{ room.id }}" data-sensor="temperature"></div>
+                                                                          </div>
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-tint"></i>
+                                                                              <div class="dott" id="humidity-dott-{{ room.id }}" data-sensor="humidity"></div>
+                                                                          </div>
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-water"></i>
+                                                                              <div class="dott" id="flood-dott-{{ room.id }}" data-sensor="flood"></div>
+                                                                          </div>
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-fire"></i>
+                                                                              <div class="dott" id="gas-dott-{{ room.id }}" data-sensor="gas"></div>
+                                                                          </div>
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-running"></i>
+                                                                              <div class="dott" id="motion-dott-{{ room.id }}" data-sensor="motion"></div>
+                                                                          </div>
+                                                                          <div class="sensor-icon">
+                                                                              <i class="fa-solid fa-door-open"></i>
+                                                                              <div class="dott" id="door-dott-{{ room.id }}" data-sensor="door"></div>
+                                                                          </div>
+                                                                      </div>
+
+                                                                      
+
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          {% empty %}
+                                                          <p>No rooms available in this building.</p>
+                                                          {% endfor %}
+                                                      </div>
+
+                                                      <div class="d-flex justify-content-between align-items-center mb-0">
+                                                          <div class="lefend">
+                                                              <h4 class="mb-0" id="active"></h4>
+                                                          </div>
+
+                                                          
+                                                          
+                                                          <div class="d-flex justify-content-between align-items-center mb-0">
+                                                            
+                                                          
+                                                            
+                                                            <!-- Add margin-end (me-2) class to add space between the buttons -->
+                                                            <button onclick="viewAllAlerts({{ building.id }})" class="btn btn-label-danger waves-effect me-2" style="margin-left: 10px;">
+                                                                <i class="fas fa-sync-alt"></i> 
+                                                            </button>
+                                                        
+                                                            <h4 class="mb-0" id="active"></h4>
+                                                        
+                                                            <!-- Add margin-start (ms-2) class to keep consistent spacing -->
+                                                            <button type="button" class="btn btn-label-warning waves-effect ms-2" data-bs-toggle="modal" data-bs-target="#fullScreenModal" style="margin-right: 10px;">
+                                                                <i class="fa fa-eye"></i> 
+                                                            </button>
+                                                        </div>
+                                                        
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              {% endfor %}
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+  <script>
+    // JavaScript function to handle room detail view (example function)
+    function viewRoomDetails(roomId) {
+        // Add logic to fetch and display room details in an off-canvas or modal
+        console.log("Room ID:", roomId);
+        // Additional logic can be added here to handle room-specific interactions
+    }
+
+
+  </script>
+
+
+
+  <!-- Overview and Alerts Section -->
+  <div class="row g-4">
+    <!-- Overview Section -->
+    <div class="col-xl-6 col-md-12">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
+                <h5 class="mb-0">Overview</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <!-- Users -->
+                    <li class="mb-3">
+                        <div class="p-3 rounded shadow-sm d-flex justify-content-between align-items-center bg-light">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-success p-2 rounded-circle">
+                                    <i class="ti ti-user ti-sm"></i>
+                                </span>
+                                <h6 class="mb-0 ms-3">Number of Users</h6>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <p class="mb-0 fw-semibold">{{ sub_admin_count }}</p>
+                                <button class="btn btn-link p-0 ms-2 view-details" data-id="{{ sub_admin_count }}" data-type="users">
+                                    <i class="ti ti-eye ti-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Rooms -->
+                    <li class="mb-3">
+                        <div class="p-3 rounded shadow-sm d-flex justify-content-between align-items-center bg-light">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-info p-2 rounded-circle">
+                                    <i class="ti ti-home ti-sm"></i>
+                                </span>
+                                <h6 class="mb-0 ms-3">Number of Rooms</h6>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <p class="mb-0 fw-semibold">{{ building_count }}</p>
+                                <button class="btn btn-link p-0 ms-2 view-details" data-id="{{ building_count }}" data-type="buildings">
+                                    <i class="ti ti-eye ti-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Average Temperature -->
+                    <li class="mb-3">
+                        <div class="p-3 rounded shadow-sm d-flex justify-content-between align-items-center bg-light">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-warning p-2 rounded-circle">
+                                    <i class="ti ti-temperature ti-sm"></i>
+                                </span>
+                                <h6 class="mb-0 ms-3">Average Temperature</h6>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <p class="mb-0 fw-semibold">{{ avg_temperature }}°C</p>
+                                <button class="btn btn-link p-0 ms-2 view-details" data-value="{{ avg_temperature }}" data-type="temperature">
+                                    <i class="ti ti-eye ti-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Average Humidity -->
+                    <li class="mb-3">
+                        <div class="p-3 rounded shadow-sm d-flex justify-content-between align-items-center bg-light">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-primary p-2 rounded-circle">
+                                    <i class="ti ti-droplet ti-sm"></i>
+                                </span>
+                                <h6 class="mb-0 ms-3">Average Humidity</h6>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <p class="mb-0 fw-semibold">{{ avg_humidity }}%</p>
+                                <button class="btn btn-link p-0 ms-2 view-details" data-value="{{ avg_humidity }}" data-type="humidity">
+                                    <i class="ti ti-eye ti-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Devices -->
+                    <li>
+                        <div class="p-3 rounded shadow-sm d-flex justify-content-between align-items-center bg-light">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-info p-2 rounded-circle">
+                                    <!-- <i class="ti ti-device ti-sm"></i> -->
+                                    <i class="fas fa-microchip ti-sm"></i>
+                                </span>
+                                <h6 class="mb-0 ms-3">Devices</h6>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <p class="mb-0 fw-semibold">{{ room_count }}</p>
+                                <button class="btn btn-link p-0 ms-2 view-details" data-type="rooms">
+                                    <i class="ti ti-eye ti-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alerts Section -->
+    <div class="col-xl-6 col-md-12">
+      <div class="card h-100">
+          <div class="card-header d-flex justify-content-between align-items-center bg-danger text-white">
+              <h5 class="mb-0">Alerts</h5>
+              <small class="text-light text-white">Past <span id="selectedTimeFilter">24 hours</span> alert details</small>
+          </div>
+          <div class="card-body">
+              <div class="d-flex justify-content-end mb-3">
+                  <select id="timeFilterSelect" class="form-select w-auto" aria-label="Time Filter">
+                      <option value="30min">Last 30 minutes</option>
+                      <option value="1h">Last 1 hour</option>
+                      <option value="2h">Last 2 hours</option>
+                      <option value="5h">Last 5 hours</option>
+                      <option value="8h">Last 8 hours</option>
+                      <option value="12h">Last 12 hours</option>
+                      <option value="24h" selected>Last 24 hours</option>
+                      <option value="2d">Last 2 days</option>
+                      <option value="3d">Last 3 days</option>
+                      <option value="5d">Last 5 days</option>
+                      <option value="10d">Last 10 days</option>
+                      <option value="15d">Last 15 days</option>
+                      <option value="20d">Last 20 days</option>
+                      <option value="30d">Last 30 days</option>
+                      <option value="60d">Last 60 days</option>
+                      <option value="90d">Last 90 days</option>
+                  </select>
+              </div>
+              <div id="barChartsub"></div>
+          </div>
+      </div>
+    </div>
+    
+  </div>
+
+
+
+  
+</div>
+
+
+
+<!-- Offcanvas Component -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="detailsOffcanvas" aria-labelledby="detailsOffcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 id="detailsOffcanvasLabel">Details</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Details will be populated here -->
+    <!-- <div id="detailsContent"></div> -->
+    <div id="detailsContent">Loading...</div>
+    
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="alertModalLabel">Alert</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="alertModalBody">
+        <!-- The alert message will be inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Full-Screen Modal -->
+<div class="modal fade" id="fullScreenModal" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="fullScreenModalLabel">Room Details</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <!-- Content goes here -->
+              <p>Loading room details...</p>
+              <!-- Dynamic content will be loaded here -->
+          </div>
+          <div id="lineChartCompAlert"></div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      // Function to handle view button click
+      document.querySelectorAll('.btn-label-warning').forEach(button => {
+          button.addEventListener('click', function () {
+              const modalBody = document.querySelector('#fullScreenModal .modal-body');
+              modalBody.innerHTML = '<p>Loading room details...</p>'; // Placeholder text
+
+              // Fetch or AJAX request to load room details
+              setTimeout(() => {
+                  modalBody.innerHTML = '<h6>Room Details Loaded!</h6>'; // Replace with fetched data
+              }, 1000); // Simulated delay for fetching
+          });
+      });
+  });
+</script>
+
+
+
+
+<script>
+
+
+  
+function updateSensorDottts(sensorData) {
+    sensorData.forEach(sensor => {
+        const roomId = sensor.room_id;
+        const dots = {
+            temperature: document.getElementById(`temperature-dot-${roomId}`),
+            humidity: document.getElementById(`humidity-dot-${roomId}`),
+            flood: document.getElementById(`flood-dot-${roomId}`),
+            gas: document.getElementById(`gas-dot-${roomId}`),
+            motion: document.getElementById(`motion-dot-${roomId}`),
+            door: document.getElementById(`door-dot-${roomId}`)
+        };
+
+        // Update dot colors based on sensor data
+        dots.temperature.classList.toggle('red', sensor.temperature_exceeds);
+        dots.humidity.classList.toggle('red', sensor.humidity_exceeds);
+        dots.flood.classList.toggle('red', sensor.flood_detected);
+        dots.gas.classList.toggle('red', sensor.gas_detected);
+        dots.motion.classList.toggle('red', sensor.motion_detected);
+        dots.door.classList.toggle('red', sensor.door_opened);
+    });
+}
+
+// Fetch and update sensor data
+function fetchSensorDataaaa() {
+    fetch('/api/sensor-dataaaa/')
+        .then(response => response.json())
+        .then(data => {
+            updateSensorDottts(data.sensor_data);
+        })
+        .catch(error => console.error('Error fetching sensor data:', error));
+}
+
+// Fetch data initially
+fetchSensorDataaaa();
+
+// Set an interval to refresh the data
+setInterval(fetchSensorDataaaa, 1000);  // Refresh every 1 second
+
+
+
+
+
+
+// function updateSensorDotttts(sensorData) {
+//     sensorData.forEach(sensor => {
+//         const roomId = sensor.room_id;
+//         const dotts = {
+//             temperature: document.getElementById(`temperature-dott-${roomId}`),
+//             humidity: document.getElementById(`humidity-dott-${roomId}`),
+//             flood: document.getElementById(`flood-dott-${roomId}`),
+//             gas: document.getElementById(`gas-dott-${roomId}`),
+//             motion: document.getElementById(`motion-dott-${roomId}`),
+//             door: document.getElementById(`door-dott-${roomId}`)
+//         };
+
+//         // Update dot colors based on sensor status
+//         dotts.temperature.className = `dott ${sensor.temperature_status}`;
+//         dotts.humidity.className = `dott ${sensor.humidity_status}`;
+//         dotts.flood.className = `dott ${sensor.flood_status}`;
+//         dotts.gas.className = `dott ${sensor.gas_status}`;
+//         dotts.motion.className = `dott ${sensor.motion_status}`;
+//         dotts.door.className = `dott ${sensor.door_status}`;
+//     });
+// }
+
+// // Fetch and update sensor data
+// function fetchSensorDataaaaaa() {
+//     fetch('/api/sensor-dataaaaa/')
+//         .then(response => response.json())
+//         .then(data => {
+//             updateSensorDotttts(data.sensor_data);
+//         })
+//         .catch(error => console.error('Error fetching sensor data:', error));
+// }
+
+// // Fetch data initially
+// fetchSensorDataaaaaa();
+
+// // Set an interval to refresh the data
+// setInterval(fetchSensorDataaaaaa, 1000);  // Refresh every 5 seconds
+
+
+function updateSensorDotttts(sensorData) {
+    sensorData.forEach(sensor => {
+        const roomId = sensor.room_id;
+        const dotts = {
+            temperature: document.getElementById(`temperature-dott-${roomId}`),
+            humidity: document.getElementById(`humidity-dott-${roomId}`),
+            flood: document.getElementById(`flood-dott-${roomId}`),
+            gas: document.getElementById(`gas-dott-${roomId}`),
+            motion: document.getElementById(`motion-dott-${roomId}`),
+            door: document.getElementById(`door-dott-${roomId}`)
+        };
+
+        // Update dot colors based on sensor status
+        dotts.temperature.className = `dott ${sensor.temperature_status}`;
+        dotts.humidity.className = `dott ${sensor.humidity_status}`;
+        dotts.flood.className = `dott ${sensor.flood_status}`;
+        dotts.gas.className = `dott ${sensor.gas_status}`;
+        dotts.motion.className = `dott ${sensor.motion_status}`;
+        dotts.door.className = `dott ${sensor.door_status}`;
+    });
+}
+
+// Fetch and update sensor data
+function fetchSensorDataaaaaa() {
+    fetch('/api/sensor-dataaaaa/')
+        .then(response => response.json())
+        .then(data => {
+            updateSensorDotttts(data.sensor_data);
+        })
+        .catch(error => console.error('Error fetching sensor data:', error));
+}
+
+// Fetch data initially
+fetchSensorDataaaaaa();
+
+// Set an interval to refresh the data
+setInterval(fetchSensorDataaaaaa, 1000);  // Refresh every 5 seconds
+
+
+
+
+
+function updateSensorpeak(sensorData) {
+    sensorData.forEach(sensor => {
+        const roomId = sensor.room_id;
+
+        // Get elements
+        const peakTempElement = document.getElementById(`peak-temperature-${roomId}`);
+        const lowestTempElement = document.getElementById(`lowest-temperature-${roomId}`);
+        const peakHumidityElement = document.getElementById(`peak-humidity-${roomId}`);
+        const lowestHumidityElement = document.getElementById(`lowest-humidity-${roomId}`);
+        
+       
+        peakTempElement.innerHTML = `<span style="font-size: 0.65rem;">${sensor.peak_temperature}°C <small style="font-size: 0.65rem;">${new Date(sensor.peak_temperature_time).toLocaleTimeString()}</small></span>`;
+        lowestTempElement.innerHTML = `<span style="font-size: 0.65rem;">${sensor.lowest_temperature}°C <small style="font-size: 0.65rem;">${new Date(sensor.lowest_temperature_time).toLocaleTimeString()}</small></span>`;
+        peakHumidityElement.innerHTML = `<span style="font-size: 0.65rem;">${sensor.peak_humidity}% <small style="font-size: 0.65rem;">${new Date(sensor.peak_humidity_time).toLocaleTimeString()}</small></span>`;
+        lowestHumidityElement.innerHTML = `<span style="font-size: 0.65rem;">${sensor.lowest_humidity}% <small style="font-size: 0.65rem;">${new Date(sensor.lowest_humidity_time).toLocaleTimeString()}</small></span>`;
+
+    });
+}
+
+
+// Fetch and update sensor data
+function fetchSensorDatapeak() {
+    fetch('/api/peaksensor-dataaa/')
+        .then(response => response.json())
+        .then(data => {
+            updateSensorpeak(data.sensor_data);
+        })
+        .catch(error => console.error('Error fetching sensor data:', error));
+}
+
+// Fetch data initially
+fetchSensorDatapeak();
+
+// Set an interval to refresh the data every minute
+setInterval(fetchSensorDatapeak, 1000);
+
+
+
+
+
+
+
+
+// function updatePowerData(powerData) {
+//     powerData.forEach(data => {
+//         const powerModuleId = data.module_id;
+
+//         // Loop through the buildings associated with the power module
+//         data.building_ids.forEach(buildingId => {
+//             // Update the power module data for each building
+//             // document.getElementById(`ct1-value-${powerModuleId}-${buildingId}`).textContent = data.ct1;
+//             // document.getElementById(`ct2-value-${powerModuleId}-${buildingId}`).textContent = data.ct2;
+//             // document.getElementById(`ct3-value-${powerModuleId}-${buildingId}`).textContent = data.ct3;
+//             // document.getElementById(`ct4-value-${powerModuleId}-${buildingId}`).textContent = data.ct4;
+
+//             // Update battery icons for each building and module
+//             ['ct1', 'ct2', 'ct3', 'ct4'].forEach(ct => {
+//                 const value = data[ct];
+//                 const iconElement = document.getElementById(`${ct}-icon-${powerModuleId}-${buildingId}`);
+//                 if (value > 0.1) {
+//                     iconElement.className = 'battery-icon red';  // Class for high values
+//                 } else {
+//                     iconElement.className = 'battery-icon black'; // Class for low values
+//                 }
+//             });
+//         });
+//     });
+// }
+
+function updatePowerData(powerData) {
+    powerData.forEach(data => {
+        const powerModuleId = data.module_id;
+
+        // Loop through the buildings associated with the power module
+        data.building_ids.forEach(buildingId => {
+            // Update corresponding names for each CT value
+            document.getElementById(`ct1-name-${powerModuleId}-${buildingId}`).textContent = data.ct1_name;
+            document.getElementById(`ct2-name-${powerModuleId}-${buildingId}`).textContent = data.ct2_name;
+            document.getElementById(`ct3-name-${powerModuleId}-${buildingId}`).textContent = data.ct3_name;
+            document.getElementById(`ct4-name-${powerModuleId}-${buildingId}`).textContent = data.ct4_name;
+
+            // Update battery icons for each building and module
+            ['ct1', 'ct2', 'ct3', 'ct4'].forEach(ct => {
+                const value = data[ct];
+                const iconElement = document.getElementById(`${ct}-icon-${powerModuleId}-${buildingId}`);
+                if (value > 0.1) {
+                    iconElement.className = 'battery-icon red';  // Class for high values
+                } else {
+                    iconElement.className = 'battery-icon black'; // Class for low values
+                }
+            });
+        });
+    });
+}
+
+
+// Fetch and update power data
+function fetchPowerData() {
+    fetch('/api/power-dataaa/')
+        .then(response => response.json())
+        .then(data => {
+            updatePowerData(data.power_data);
+        })
+        .catch(error => console.error('Error fetching power data:', error));
+}
+
+// Fetch data initially
+fetchPowerData();
+
+// Set an interval to refresh the data
+setInterval(fetchPowerData, 1000);  // Refresh every 5 seconds
+
+
+
+
+
+
+  
+
+function viewAllAlerts(buildingId) {
+    fetch(`/mark_all_alerts_as_viewedsub/${buildingId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),  // Ensure you have a function to get CSRF token
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Set the message in the modal body
+            document.getElementById('alertModalBody').innerText = 'All alerts of this rooms devices marked as viewed.';
+        } else {
+            // Set the error message in the modal body
+            document.getElementById('alertModalBody').innerText = 'Error: ' + data.message;
+        }
+        // Show the modal
+        var alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+        alertModal.show();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Set the error message in the modal body
+        document.getElementById('alertModalBody').innerText = 'An error occurred. Please try again.';
+        // Show the modal
+        var alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+        alertModal.show();
+    });
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   function updateAlertCounts() {
+//     const loadingElement = document.getElementById('loading');
+//     loadingElement.style.display = 'block'; // Show loading spinner
+
+//     fetch('/dashboard/alert_countss/')
+//       .then(response => response.json())
+//       .then(data => {
+//         document.getElementById('total').textContent = data.total;
+//         document.getElementById('active').textContent = data.active;
+//         document.getElementById('inactive').textContent = data.resolved;
+//         document.getElementById('pending').textContent = data.pending;
+//       })
+//       .catch(error => console.error('Error fetching alert counts:', error))
+//       .finally(() => {
+//         loadingElement.style.display = 'none'; // Hide loading spinner
+//       });
+//   }
+
+//   // Update the alert counts every 30 seconds
+//   setInterval(updateAlertCounts, 30000);
+  
+//   // Initial update
+//   updateAlertCounts();
+// });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  function updateAlertCounts() {
+    const loadingElement = document.getElementById('loading');
+    loadingElement.style.display = 'block'; // Show loading spinner
+
+    fetch('/dashboard/alert_countss/')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('total').textContent = data.total;
+        document.getElementById('active').textContent = data.active;
+        document.getElementById('resolved').textContent = data.resolved;
+        document.getElementById('pending').textContent = data.pending;
+      })
+      .catch(error => console.error('Error fetching alert counts:', error))
+      .finally(() => {
+        loadingElement.style.display = 'none'; // Hide loading spinner
+      });
+  }
+
+  // Update the alert counts every 30 seconds
+  setInterval(updateAlertCounts, 30000);
+  
+  // Initial update
+  updateAlertCounts();
+});
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+
+
+  function updateAlertCounts() {
+      $.ajax({
+          url: '{% url "sub_admin_dashboard" %}',  // Ensure this URL points to your view
+          method: 'GET',
+          success: function(data) {
+              $('#total').text(data.alerts_count);
+              $('#active').text(data.active_alerts_count);
+              $('#resolved').text(data.resolved_alerts_count);
+              $('#pending').text(data.pending_alerts_count);
+          }
+      });
+  }
+  
+  setInterval(updateAlertCounts, 5000);  // Update every 5 seconds
+  
+
+
+
+
+
+
+
+  
+document.addEventListener('DOMContentLoaded', function () {
+  // Function to handle view details click
+  function handleViewDetailsClick(button) {
+    const id = button.getAttribute('data-id');
+    const type = button.getAttribute('data-type'); // Get the type of data (users, buildings, rooms, temperature, humidity)
+
+    // Fetch details based on type
+    if (type === 'temperature' || type === 'humidity') {
+      const value = button.getAttribute('data-value');
+      const content = type === 'temperature' ? `<h6>Average Temperature</h6><p>${value} °C</p>` : `<h6>Average Humidity</h6><p>${value} %</p>`;
+      const detailsContent = document.getElementById('detailsContent');
+      detailsContent.innerHTML = content;
+      const offcanvasElement = document.getElementById('detailsOffcanvas');
+      const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+      offcanvas.show();
+    } else {
+      // Fetch details for users, buildings, rooms
+      fetch(`/dashboard/details/${type}/${id}/`)
+        .then(response => response.json())
+        .then(data => {
+          const detailsContent = document.getElementById('detailsContent');
+          let detailsHtml = '';
+
+          if (type === 'users') {
+            detailsHtml = '<h6>Users:</h6><ul class="list-group list-group-flush">';
+            data.forEach(user => {
+              detailsHtml += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="ti ti-user ti-sm"></i> ${user.username}</span>
+                              </li>`;
+            });
+            detailsHtml += '</ul>';
+          } else if (type === 'buildings') {
+            detailsHtml = '<h6>Buildings:</h6><ul class="list-group list-group-flush">';
+            data.forEach(building => {
+              detailsHtml += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="ti ti-home ti-sm"></i> ${building.name}</span>
+                                <button class="btn btn-link p-0 ms-2 view-rooms" data-building-id="${building.id}">
+                                  <i class="ti ti-eye ti-sm"></i> View Rooms
+                                </button>
+                              </li>`;
+            });
+            detailsHtml += '</ul>';
+          } else if (type === 'rooms') {
+            detailsHtml = '<h6>Rooms:</h6><ul class="list-group list-group-flush">';
+            data.forEach(room => {
+              detailsHtml += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="ti ti-layout ti-sm"></i> ${room.name}</span>
+                              </li>`;
+            });
+            detailsHtml += '</ul>';
+          }
+
+          detailsContent.innerHTML = detailsHtml;
+          const detailsOffcanvas = new bootstrap.Offcanvas(document.getElementById('detailsOffcanvas'));
+          detailsOffcanvas.show();
+
+          // Add event listeners for the "View Rooms" buttons
+          document.querySelectorAll('.view-rooms').forEach(button => {
+            button.addEventListener('click', function () {
+              const buildingId = this.getAttribute('data-building-id');
+              fetch(`/dashboard/details/rooms/${buildingId}/`)
+                .then(response => response.json())
+                .then(rooms => {
+                  let roomsHtml = '<h6>Devices in Building:</h6><ul class="list-group list-group-flush">';
+                  rooms.forEach(room => {
+                    roomsHtml += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="ti ti-layout ti-sm"></i> ${room.name}</span>
+                                  </li>`;
+                  });
+                  roomsHtml += '</ul>';
+                  detailsContent.innerHTML = roomsHtml;
+                })
+                .catch(error => {
+                  console.error('Error fetching rooms:', error);
+                });
+            });
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching details:', error);
+        });
+    }
+  }
+
+  // Attach click event listener to all 'view-details' buttons
+  document.querySelectorAll('.view-details').forEach(button => {
+    button.addEventListener('click', function () {
+      handleViewDetailsClick(this);
+    });
+  });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  function handleViewDetailsClick(button) {
+    const type = button.getAttribute('data-type'); // Get the type of data
+
+    if (type === 'rooms') {
+      fetch('/dashboard/rooms/')
+        .then(response => response.json())
+        .then(data => {
+          const detailsContent = document.getElementById('detailsContent');
+          let detailsHtml = `
+            <div class="mb-3">
+              <h6>Devices:</h6>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Device Name</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+          `;
+          data.forEach(room => {
+            detailsHtml += `
+              <tr>
+                <td>
+                  <i class="ti ti-layout ti-sm me-2"></i>${room.name}
+                </td>
+                <td>
+                  <button class="btn btn-link p-0 ms-2 view-room-details" data-room-id="${room.id}">
+                    <i class="ti ti-eye ti-sm"></i> View Details
+                  </button>
+                </td>
+              </tr>
+            `;
+          });
+          detailsHtml += '</tbody></table></div>';
+          detailsContent.innerHTML = detailsHtml;
+          const detailsOffcanvas = new bootstrap.Offcanvas(document.getElementById('detailsOffcanvas'));
+          detailsOffcanvas.show();
+
+          // Add event listeners for the "View Details" buttons
+          document.querySelectorAll('.view-room-details').forEach(button => {
+            button.addEventListener('click', function () {
+              const roomId = this.getAttribute('data-room-id');
+              fetch(`/dashboard/room/${roomId}/`)
+                .then(response => response.json())
+                .then(room => {
+                  const roomDetailsHtml = `
+                    <div class="card mt-3">
+                      <div class="card-header">
+                        <h6 class="mb-0">Device Details</h6>
+                      </div>
+                      <div class="card-body">
+                        <table class="table table-bordered">
+                          <tbody>
+                            <tr>
+                              <th scope="row">Name</th>
+                              <td>${room.name}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">IP Address</th>
+                              <td>${room.ip_address}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Temperature Threshold</th>
+                              <td>${room.temperature_threshold}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Humidity Threshold</th>
+                              <td>${room.humidity_threshold}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="card mt-3">
+                      <div class="card-header">
+                        <h6 class="mb-0">Alerts in Last 24 Hours</h6>
+                      </div>
+                      <div class="card-body">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">Alert Type</th>
+                              <th scope="col">Occurrences</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            ${room.alerts.temperature_exceeds !== undefined ? `<tr><th scope="row">Temperature Alerts</th><td><span class="badge bg-danger">${room.alerts.temperature_exceeds}</span></td></tr>` : ''}
+                            ${room.alerts.humidity_exceeds !== undefined ? `<tr><th scope="row">Humidity Alerts</th><td><span class="badge bg-danger">${room.alerts.humidity_exceeds}</span></td></tr>` : ''}
+                            ${room.alerts.door_exceeds !== undefined ? `<tr><th scope="row">Door Alerts</th><td><span class="badge bg-danger">${room.alerts.door_exceeds}</span></td></tr>` : ''}
+                            ${room.alerts.flood_exceeds !== undefined ? `<tr><th scope="row">Flood Alerts</th><td><span class="badge bg-danger">${room.alerts.flood_exceeds}</span></td></tr>` : ''}
+                            ${room.alerts.pir_exceeds !== undefined ? `<tr><th scope="row">Motion Alerts</th><td><span class="badge bg-danger">${room.alerts.pir_exceeds}</span></td></tr>` : ''}
+                            ${room.alerts.gas_exceeds !== undefined ? `<tr><th scope="row">Gas Alerts</th><td><span class="badge bg-danger">${room.alerts.gas_exceeds}</span></td></tr>` : ''}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  `;
+                  document.getElementById('detailsContent').innerHTML = roomDetailsHtml;
+                })
+                .catch(error => {
+                  console.error('Error fetching room details:', error);
+                });
+            });
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching rooms:', error);
+        });
+    }
+  }
+
+  document.querySelectorAll('.view-details').forEach(button => {
+    button.addEventListener('click', function () {
+      handleViewDetailsClick(this);
+    });
+  });
+});
+
+
+
+
+
+
+  </script>
+  
+
+
+{% endblock %}

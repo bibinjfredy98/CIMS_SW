@@ -1,0 +1,63 @@
+
+
+<!--   
+<footer class="content-footer footer bg-footer-theme fixfooter">
+  <div class="container-xxl">
+      <div class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column">
+          <div class="actcamz"> 
+              <h5>Active devices: <span id="active_rooms">{{ active_numbers }}</span></h5>
+              <h5>Inactive devices: <span id="inactive_rooms">{{ inactive_numbers }}</span></h5>
+          </div>
+          <div class="actdattimz">
+              <h6 id="current_time">{{current_time}}</h6>
+              <h6 id="current_date">{{current_date}}</h6>
+          </div>
+      </div>
+  </div>
+</footer> -->
+
+<footer class="content-footer footer bg-footer-theme fixfooter">
+    <div class="container-xxl">
+        <div class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column">
+            <div class="actcamz"> 
+                <h5>Active devices: <span id="active_rooms" style="color: green;">{{ active_numbers }}</span></h5>
+                <h5>Inactive devices: <span id="inactive_rooms" style="color: red;">{{ inactive_numbers }}</span></h5>
+            </div>
+            <div class="actdattimz">
+                <h6 id="current_time">{{current_time}}</h6>
+                <h6 id="current_date">{{current_date}}</h6>
+            </div>
+        </div>
+    </div>
+  </footer>
+  
+  
+
+
+<script>
+function updateRoomCounts() {
+  fetch('/get-active-inactive-rooms/')
+      .then(response => response.json())
+      .then(data => {
+          document.getElementById('active_rooms').innerText = data.active_numbers;
+          document.getElementById('inactive_rooms').innerText = data.inactive_numbers;
+      });
+}
+
+function updateTime() {
+  const now = new Date();
+  const timeOptions = { hour: '2-digit', minute: '2-digit' };
+  const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+  
+  document.getElementById('current_time').innerText = now.toLocaleTimeString([], timeOptions);
+  document.getElementById('current_date').innerText = now.toLocaleDateString([], dateOptions);
+}
+
+// Update the room counts and time every 5 minutes (300000 ms)
+setInterval(updateRoomCounts, 300000);
+setInterval(updateTime, 1000);
+
+// Initial call to display data immediately on page load
+updateRoomCounts();
+updateTime();
+</script>

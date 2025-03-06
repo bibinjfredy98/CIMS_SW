@@ -1,0 +1,146 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% get_static_prefix as static %}
+
+{% block content %}
+<div class="container-fluid flex-grow-1 container-p-y">
+    <h4 class="py-0 mb-3">Live Sensor Data</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
+                        <div class="tabcamz">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card mt-3">
+                                        <div class="card-header mt-0 mb-0 pt-3 pb-0 filtlinez">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="headlizt pt-0">
+                                                    <h5>Sensor Data</h5>
+                                                </div>
+                                            </div>
+                                            <div class="fillshow">
+                                                <div class="collapse mb-3" id="collapseFilter" style="display:block">
+                                                    <form class="dt_adv_search" method="GET">
+                                                        <div class="row">
+                                                            <div class="col-12 col-sm-6 col-lg-3">
+                                                                <div class="ecommerce-select2-dropdown">
+                                                                    <label class="form-label" for="camera">Room</label>
+                                                                    <select id="camera" name="room" class="select2 form-select" data-placeholder="Select Room">
+                                                                        <option value="">Select Room</option>
+                                                                        {% for room in rooms %}
+                                                                        <option value="{{ room.pk }}">{{ room.name }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-sm-6 col-lg-3">
+                                                                <div class="ecommerce-select2-dropdown">
+                                                                    <label class="form-label" for="flatpickr-range">Date</label>
+                                                                    <input type="text" class="form-control" name="date_range" placeholder="YYYY-MM-DD to YYYY-MM-DD" id="flatpickr-range" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-sm-6 col-lg-3">
+                                                                <div class="sercanbox">
+                                                                    <button type="submit" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light">Search</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-datatable table-responsive pt-0">
+                                            <table class="datatables-basic table conftable" id="sensordatatable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Room Name</th>
+                                                        <th>Temperature</th>
+                                                        <th>Humidity</th>
+                                                        <th>Door State</th>
+                                                        <th>Flood State</th>
+                                                        <th>Motion State</th>
+                                                        <th>Gas State</th>
+                                                        <th>Timestamp</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0" id="sensordatatablebody">
+                                                    {% for data in sensor_data %}
+                                                        <tr>
+                                                            <td>{{ data.room_name }}</td>
+                                                            <td {% if data.temperature_exceeds %}style="background-color: red;"{% endif %}>{{ data.temperature }}</td>
+                                                            <td {% if data.humidity_exceeds %}style="background-color: red;"{% endif %}>{{ data.humidity }}</td>
+                                                            <td {% if data.door_opened %}style="background-color: red;"{% endif %}>{{ data.door_state }}</td>
+                                                            <td {% if data.flood_detected %}style="background-color: red;"{% endif %}>{{ data.flood_state }}</td>
+                                                            <td {% if data.motion_detected %}style="background-color: red;"{% endif %}>{{ data.pir_state }}</td>
+                                                            <td {% if data.gas_detected %}style="background-color: red;"{% endif %}>{{ data.gas_state }}</td>
+                                                            <td>{{ data.timestamp }}</td>
+                                                        </tr>
+                                                    {% empty %}
+                                                   
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        {% if sensor_data.has_other_pages %}
+                                        <div class="pagination-container">
+                                            <ul class="pagination">
+                                                {% if sensor_data.has_previous %}
+                                                <li><a href="?page=1">First</a></li>
+                                                <li><a href="?page={{ sensor_data.previous_page_number }}">Previous</a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function fetchSensorData() {
+            fetch('{% url "get_live_sensor_datasub" %}')
+                .then(response => response.json())
+                .then(data => {
+                    const sensorTableBody = document.getElementById('sensordatatablebody');
+                    sensorTableBody.innerHTML = '';
+
+                    if (data.sensor_data.length > 0) {
+                        data.sensor_data.forEach(sensor => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${sensor.room_name}</td>
+                                <td ${sensor.temperature_exceeds ? 'style="color: red;"' : ''}>${sensor.temperature}</td>
+                                <td ${sensor.humidity_exceeds ? 'style="color: red;"' : ''}>${sensor.humidity}</td>
+                                <td ${sensor.door_opened ? 'style="color: red;"' : ''}>${sensor.door_state}</td>
+                                <td ${sensor.flood_detected ? 'style="color: red;"' : ''}>${sensor.flood_state}</td>
+                                <td ${sensor.motion_detected ? 'style="color: red;"' : ''}>${sensor.pir_state}</td>
+                                <td ${sensor.gas_detected ? 'style="color: red;"' : ''}>${sensor.gas_state}</td>
+                                <td>${sensor.timestamp}</td>
+                            `;
+                            sensorTableBody.appendChild(row);
+                        });
+                    } else {
+                        const row = document.createElement('tr');
+                        row.innerHTML = '<td colspan="8">No sensor data found.</td>';
+                        sensorTableBody.appendChild(row);
+                    }
+                })
+                .catch(error => console.error('Error fetching sensor data:', error));
+        }
+
+        fetchSensorData();
+        setInterval(fetchSensorData, 5000);  // Refresh every 5 seconds
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,324 @@
+{% load static %}
+{% get_static_prefix as static %}
+
+<!doctype html>
+
+<html lang="en" class=" layout-navbar-fixed layout-menu-fixed layout-compact dark-style" dir="ltr"
+  data-theme="theme-default" data-assets-path="{{static}}assets/" data-template="vertical-menu-template">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>Dashboard </title>
+
+  <meta name="description" content="" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{{static}}assets/img/favicon/favicon.ico" />
+
+  <!-- Fonts -->
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap"
+    rel="stylesheet" /> -->
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="{{static}}assets/vendor/fonts/fontawesome.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/fonts/tabler-icons.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/fonts/flag-icons.css" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="{{static}}assets/vendor/css/rtl/core-dark.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/css/rtl/theme-default-dark.css" />
+  <link rel="stylesheet" href="{{static}}assets/css/demo.css" />
+
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/node-waves/node-waves.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/typeahead-js/typeahead.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/apex-charts/apex-charts.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />  
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/bs-stepper/bs-stepper.css" /> 
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/select2/select2.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/tagify/tagify.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/typeahead-js/typeahead.css" />
+
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/node-waves/node-waves.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/typeahead-js/typeahead.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/flatpickr/flatpickr.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/pickr/pickr-themes.css" />
+  <!-- Page CSS -->
+
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/animate-css/animate.css" />
+  <link rel="stylesheet" href="{{static}}assets/vendor/libs/sweetalert2/sweetalert2.css" />
+
+  <link rel="stylesheet" href="{{static}}assets/vendor/css/pages/app-logistics-dashboard.css" />
+
+  <!-- Helpers -->
+  <script src="{{static}}assets/vendor/js/helpers.js"></script>
+  <script src="{{static}}assets/js/config.js"></script>
+
+
+<!--this is done for red graph internet by ashik-->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
+  
+
+
+
+
+
+
+
+</head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu -->
+
+        {% include 'includes/menu.html' %}
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          {% include 'includes/top-menu.html' %}
+
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <!-- <div class="content-wrapper"> -->
+            
+          <div class="content-wrapper {% block content_wrapper_class %}{% endblock %}">
+   
+
+            
+            <!-- Content -->
+            
+            
+            {% block content %}
+                    
+
+			{% endblock %}
+
+      
+            
+            <!-- / Content -->
+        
+            <!-- Footer -->
+            {% include 'includes/footer.html' %}
+            <!-- / Footer -->
+        
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+
+      <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+      <div class="drag-target"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+
+    {% block js %}
+    <script src="{{static}}assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="{{static}}assets/vendor/libs/popper/popper.js"></script>
+    <script src="{{static}}assets/vendor/js/bootstrap.js"></script>
+    <script src="{{static}}assets/vendor/libs/node-waves/node-waves.js"></script>
+    <script src="{{static}}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="{{static}}assets/vendor/libs/hammer/hammer.js"></script>
+    <script src="{{static}}assets/vendor/libs/i18n/i18n.js"></script>
+    <script src="{{static}}assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="{{static}}assets/vendor/js/menu.js"></script>
+
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <script src="{{static}}assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="{{static}}assets/vendor/libs/flatpickr/flatpickr.js"></script>
+
+    
+    <script src="{{static}}assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="{{static}}assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+    <script src="{{static}}assets/vendor/libs/cleavejs/cleave.js"></script>
+    <script src="{{static}}assets/vendor/libs/cleavejs/cleave-phone.js"></script>
+    <script src="{{static}}assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+    <script src="{{static}}assets/vendor/libs/select2/select2.js"></script>
+    <script src="{{static}}assets/vendor/libs/tagify/tagify.js"></script>
+    <script src="{{static}}assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="{{static}}assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="{{static}}assets/vendor/js/menu.js"></script>
+    <script src="{{static}}assets/vendor/libs/swiper/swiper.js"></script>
+
+
+
+    <script src="{{static}}assets/vendor/libs/bloodhound/bloodhound.js"></script>
+    <script src="{{static}}assets/vendor/libs/@form-validation/popular.js"></script>
+    <script src="{{static}}assets/vendor/libs/@form-validation/bootstrap5.js"></script>
+    <script src="{{static}}assets/vendor/libs/@form-validation/auto-focus.js"></script>
+
+    <script src="{{static}}assets/vendor/js/mega-dropdown.js"></script>
+
+    <script src="{{static}}assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+
+    <!-- Main JS -->
+    <script src="{{static}}assets/js/main.js"></script>
+
+    <!-- Page JS -->
+
+    <script src="{{static}}assets/js/forms-selects.js"></script>
+    <script src="{{static}}assets/js/forms-tagify.js"></script>
+    <script src="{{static}}assets/js/forms-typeahead.js"></script>
+
+    <script src="{{static}}assets/js/app-logistics-dashboard.js"></script>
+    <script src="{{static}}assets/js/extended-ui-sweetalert2.js"></script>
+    <script src="{{static}}assets/js/tables-datatables-basic.js"></script>
+    <script src="{{static}}assets/js/forms-selects.js"></script>
+    <script src="{{static}}assets/js/form-wizard-icons.js"></script>
+    <script src="{{static}}assets/js/charts-apex.js"></script>
+    <script src="{{static}}assets/js/ui-navbar.js"></script>
+    <script src="{{static}}assets/js/forms-pickers.js"></script>
+    <script src="{{static}}assets/js/dashboards-analytics.js"></script>
+    <script src="{{static}}assets/js/dashboards-crm.js"></script>
+
+
+
+
+
+
+
+
+
+
+   
+
+
+    <script>
+
+            /////////////////////////////////////////////  this is for pin unpit dashboard and dosent goes while refresh by storing the current page in the local storage 
+
+      // Array of the dashboard URLs
+      const dashboards = [
+        '{% url "main_admin_dashboard1" %}',
+       
+      ];
+    
+      // Get the current page URL
+      const currentUrl = window.location.pathname;
+    
+      // Function to find the current dashboard index
+      function getCurrentDashboardIndex() {
+        for (let i = 0; i < dashboards.length; i++) {
+          if (currentUrl.includes(dashboards[i])) {
+            return i;
+          }
+        }
+        return -1; // Return -1 if not a dashboard page
+      }
+    
+      let rotationInterval; // Variable to hold the interval ID
+    
+      // Retrieve the pin state from localStorage
+      let isRotationPaused = localStorage.getItem('isRotationPaused') === 'true';
+    
+      // Function to start the automatic rotation
+      function startRotation() {
+        rotationInterval = setInterval(() => {
+          if (!isRotationPaused) {
+            goToNextDashboard();
+          }
+        }, 5000);
+      }
+    
+      // Function to stop the automatic rotation
+      function stopRotation() {
+        clearInterval(rotationInterval);
+      }
+    
+      // Navigate to the next dashboard
+      function goToNextDashboard() {
+        let currentIndex = getCurrentDashboardIndex();
+        if (currentIndex !== -1) {
+          const nextIndex = (currentIndex + 1) % dashboards.length; // Ensure it cycles
+          window.location.href = dashboards[nextIndex];
+        }
+      }
+    
+      // Navigate to the previous dashboard
+      function goToPrevDashboard() {
+        let currentIndex = getCurrentDashboardIndex();
+        if (currentIndex !== -1) {
+          const prevIndex = (currentIndex - 1 + dashboards.length) % dashboards.length; // Ensure it cycles
+          window.location.href = dashboards[prevIndex];
+        }
+      }
+    
+      // Initialize the pin state on page load
+      function initializePinState() {
+        const pinIcon = document.getElementById('pinIcon');
+        if (isRotationPaused) {
+          pinIcon.classList.add('text-danger'); // Highlight the pin icon
+        } else {
+          pinIcon.classList.remove('text-danger'); // Remove highlight from the pin icon
+        }
+      }
+    
+      // Toggle the pin state
+      document.getElementById('pinBtn').addEventListener('click', function () {
+        isRotationPaused = !isRotationPaused; // Toggle the rotation state
+        localStorage.setItem('isRotationPaused', isRotationPaused); // Save the state to localStorage
+        initializePinState(); // Update the icon appearance
+      });
+    
+      // Add event listeners to the Next and Previous buttons
+      document.getElementById('nextBtn').addEventListener('click', goToNextDashboard);
+      document.getElementById('prevBtn').addEventListener('click', goToPrevDashboard);
+    
+      // Start automatic rotation on dashboard pages
+      if (getCurrentDashboardIndex() !== -1) {
+        initializePinState(); // Set the initial state of the pin icon
+        startRotation();
+      }
+    </script>
+    
+
+
+    <script>
+      $(document).ready(function() {
+        $('.enshow').hide();
+        // Listen for changes on the switch input
+        $('.enswitch').change(function() {
+          // Check if the switch is checked
+          if ($(this).is(':checked')) {
+            // If checked, show the .enshow div
+            $('.enshow').show();
+          } else {
+            // If unchecked, hide the .enshow div
+            $('.enshow').hide();
+          }
+        });
+      });
+    </script>
+    {% endblock %}
+  </body>
+</html>

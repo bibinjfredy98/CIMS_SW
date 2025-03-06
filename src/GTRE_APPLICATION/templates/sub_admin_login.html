@@ -1,0 +1,127 @@
+<!--sub_admin_login.html-->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub Admin Login</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #0b151f;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden; /* Add this line to remove scrollbar */
+}
+
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: rgb(230, 72, 14); /* Blue color for contrast */
+        }
+
+        form {
+            max-width: 300px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff; /* Adjust label color */
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color:rgb(230, 72, 14);
+        }
+
+        input[type="submit"] {
+            background-color: #2d3845;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(82, 30, 12);
+        }
+
+        .go-to-home {
+            text-align: center;
+        }
+
+        .back-button {
+            padding: 10px 20px;
+            background-color: #2d3845;
+            color: rgb(230, 72, 14);
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: rgb(82, 30, 12);
+        }
+        .back-buttonn {
+            padding: 10px 20px;
+            margin-bottom: 30px;
+            background-color: #2d3845;
+            color:rgb(230, 72, 14);
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .back-buttonn:hover{
+            background-color: rgb(82, 30, 12);
+        }
+    </style>
+</head>
+<!--sub_admin_login.html-->
+
+<body>
+
+<div style="margin-bottom: 40px;">
+    <center>{{msg}}</center>
+    <h2>Sub Admin Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+
+
+<!-- <a href="{% url 'signup_sub_admin' %}" class="back-buttonn">Sign Up</a> Link to sign-up page -->
+
+
+<a href="{% url 'home' %}" class="back-button">Back</a>
+
+</body>
+</html>

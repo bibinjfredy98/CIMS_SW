@@ -1,0 +1,505 @@
+
+
+
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+<div class="container-fluid flex-grow-1 container-p-y">
+    <div class="alert alert-success d-none" role="alert">Alert details saved successfully</div>
+    <div class="alert alert-success d-none" role="alert">Alert details updated successfully</div>
+    <h4 class="py-0 mb-3">Alerts</h4>
+
+    
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="navs-top-home-tab" data-bs-toggle="tab" href="#navs-top-home" role="tab" aria-controls="navs-top-home" aria-selected="true">Alerts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="navs-top-home-pending-tab" data-bs-toggle="tab" href="#navs-top-home-pending" role="tab" aria-controls="navs-top-home-pending" aria-selected="false">Pending Alerts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="navs-top-home-viewed-tab" data-bs-toggle="tab" href="#navs-top-home-viewed" role="tab" aria-controls="navs-top-home-viewed" aria-selected="false">Resolved Alerts</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <!-- Alerts Tab -->
+
+
+                    <!-- Alerts Tab -->
+                    <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
+                        <div class="card mt-3">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5>Alert Details</h5>
+                                <button class="btn btn-link" data-bs-toggle="collapse" href="#collapseFilter" role="button" aria-expanded="false" aria-controls="collapseFilter">
+                                    Filter
+                                </button>
+                            </div>
+                            <div class="collapse" id="collapseFilter">
+                                <div class="card-body">
+                                    <form class="dt_adv_search" method="GET">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-6 mb-3">
+                                                <label class="form-label" for="camera">Room</label>
+                                                <select id="camera" name="room" class="select2 form-select" data-placeholder="Select Room">
+                                                    <option value="">Select Room</option>
+                                                    {% for room in rooms %}
+                                                    <option value="{{ room.pk }}">{{ room.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 mb-3">
+                                                <label class="form-label" for="sensor">Sensor</label>
+                                                <select id="sensor" name="sensor" class="select2 form-select" data-placeholder="Select Sensor">
+                                                    <option value="">Select Sensor</option>
+                                                    <option value="temperature">Temperature</option>
+                                                    <option value="humidity">Humidity</option>
+                                                    <option value="door">Door State</option>
+                                                    <option value="flood">Flood State</option>
+                                                    <option value="motion">Motion State</option>
+                                                    <option value="gas">Gas State</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 mb-3">
+                                                <label class="form-label" for="flatpickr-range">Date</label>
+                                                <input type="text" class="form-control" name="date_range" placeholder="YYYY-MM-DD to YYYY-MM-DD" id="flatpickr-range" />
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 mb-3 d-flex align-items-end">
+                                                <button type="submit" class="btn btn-primary me-2">Search</button>
+                                                <button id="reset-alert-btn" class="btn btn-danger me-2">Reset </button>
+                                                <button class="btn btn-primary" id="download-data-btn">Download</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form method="POST" action="{% url 'update_alertssub' %}">
+                                    {% csrf_token %}
+
+
+                                    <div class="mb-3">
+                                        <input type="checkbox" id="select-all" class="form-check-input">
+                                        <label for="select-all" class="form-check-label">Select All</label>
+                                    </div>
+
+
+                                    <div class="table-responsive">
+                                        
+                                        <table class="table table-bordered table-striped" id="alerttable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Alert</th>
+                                                    <th>Message</th>
+                                                    <th>Device</th>
+                                                    <th>Room</th>
+                                                    <th>Users</th>
+                                                    <th>Date</th>
+                                                    <th>Time</th>
+                                                    <th>Resolve</th>
+                                                    <th>Viewed By</th> <!-- New column for viewer -->
+                                                    <th>Viewed At</th> <!-- New column for viewed time -->
+                                                </tr>
+                                            </thead>
+                                            <tbody id="alerttabletbody">
+                                                {% for alert in alerts %}
+                                                <tr>
+                                                    <td>{{ alert.message }}</td>
+                                                    <td>{{ alert.type }}</td>
+                                                    <td>{{ alert.room.name }}</td>
+                                                    <td>
+                                                        {% for building in alert.room.buildings.all %}
+                                                            {{ building.name }}{% if not forloop.last %}, {% endif %}
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td>
+                                                        {% for building in alert.room.buildings.all %}
+                                                            {% for sub_admin in building.sub_admins.all %}
+                                                                {{ sub_admin.username }}{% if not forloop.last %}, {% endif %}
+                                                            {% endfor %}
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td>{{ alert.timestamp|date:"Y-m-d" }}</td>
+                                                    <td>{{ alert.timestamp|time:"H:i:s" }}</td>
+                                                    <td>
+                                                        <input type="checkbox" name="alert_ids" value="{{ alert.id }}" {% if alert.viewed %}checked{% endif %} class="form-check-input">
+                                                    </td>
+                                                    <td>{{ alert.viewed_by|default:"No one viewed" }}</td> <!-- Display viewer or default -->
+                                                    <td>{{ alert.viewed_at|date:"Y-m-d H:i:s"|default:"" }}</td> <!-- Display when viewed or leave empty -->
+                                                </tr>
+                                                {% empty %}
+                                                <tr>
+                                                    <td colspan="10" class="text-center">No alerts found.</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-3">Update Alerts</button>
+                                </form>
+                            </div>
+                           
+                            <div class="card-footer d-flex justify-content-center">
+                                <nav>
+                                    <ul class="pagination">
+                                        {% if alerts.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ alerts.previous_page_number }}">Previous</a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Previous</span>
+                                        </li>
+                                        {% endif %}
+                            
+                                        {% if alerts.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ alerts.next_page_number }}">Next</a>
+                                        </li>
+                                        {% else %}
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Next</span>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- Pending Alerts Tab -->
+                    <div class="tab-pane fade" id="navs-top-home-pending" role="tabpanel">
+                        <div class="card mt-3">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5>Pending Alerts</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Message</th>
+                                                <th>Timestamp</th>
+                                                <th>Device</th>
+                                                <th>Room</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for alert in unviewed_alerts %}
+                                            <tr>
+                                                <td>{{ alert.message }}</td>
+                                                <td>{{ alert.timestamp|date:"d M Y, H:i" }}</td>
+                                                <td>{{ alert.room.name }}</td>
+                                                <td>
+                                                    {% for building in alert.room.buildings.all %}
+                                                        {{ building.name }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </td>
+                                                <td><span class="badge bg-warning badge-clickable" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view details" data-alert-id="{{ alert.id }}">Unviewed</span></td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr>
+                                                <td colspan="5" class="text-center">No unviewed alerts found.</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Resolved Alerts Tab -->
+                    <div class="tab-pane fade" id="navs-top-home-viewed" role="tabpanel">
+                        <div class="card mt-3">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5>Resolved Alerts</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Message</th>
+                                                <th>Timestamp</th>
+                                                <th>Device</th>
+                                                <th>Room</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for alert in viewed_alerts %}
+                                            <tr>
+                                                <td>{{ alert.message }}</td>
+                                                <td>{{ alert.timestamp|date:"d M Y, H:i" }}</td>
+                                                <td>{{ alert.room.name }}</td>
+                                                <td>
+                                                    {% for building in alert.room.buildings.all %}
+                                                        {{ building.name }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </td>
+                                                <td><span class="badge bg-secondary badge-clickable" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view details" data-alert-id="{{ alert.id }}">Viewed</span></td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr>
+                                                <td colspan="5" class="text-center">No viewed alerts found.</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    
+                    <!-- Offcanvas Component -->
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="detailsOffcanvas" aria-labelledby="detailsOffcanvasLabel">
+                        <div class="offcanvas-header">
+                        <h5 id="detailsOffcanvasLabel">Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                        <!-- Details will be populated here -->
+                        <div id="detailsContent"></div>
+                        </div>
+                    </div>
+                    <!-- Offcanvas for Download Data -->
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="downloadDataOffcanvas" aria-labelledby="downloadDataOffcanvasLabel">
+                        <div class="offcanvas-header">
+                            <h5 id="downloadDataOffcanvasLabel">Download Data</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <form id="download-data-form" method="GET" action="{% url 'download_data' %}">
+                                <div class="mb-3">
+                                    <label for="room-select" class="form-label">Select Room</label>
+                                    <select class="form-select" id="room-select" name="room_id">
+                                        {% for room in rooms %}
+                                        <option value="{{ room.id }}">{{ room.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="start-datetime" class="form-label">Start Date and Time</label>
+                                    <input type="datetime-local" class="form-control" id="start-datetime" name="start_datetime" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="end-datetime" class="form-label">End Date and Time</label>
+                                    <input type="datetime-local" class="form-control" id="end-datetime" name="end_datetime" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Download</button>
+                            </form>
+                        </div>
+                    </div>
+  
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+        ///////////////////////////////////////   this is for selecting all 
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            function initializeSelectAll() {
+                const selectAllCheckbox = document.getElementById('select-all');
+                const alertCheckboxes = document.querySelectorAll('input[name="alert_ids"]');
+
+                selectAllCheckbox.addEventListener('change', function() {
+                    alertCheckboxes.forEach(checkbox => {
+                        checkbox.checked = selectAllCheckbox.checked;
+                    });
+                });
+
+                alertCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function() {
+                        const allChecked = Array.from(alertCheckboxes).every(cb => cb.checked);
+                        selectAllCheckbox.checked = allChecked;
+                        selectAllCheckbox.indeterminate = !allChecked && Array.from(alertCheckboxes).some(cb => cb.checked);
+                    });
+                });
+            }
+
+            initializeSelectAll();
+
+            // Re-initialize select all functionality after each page refresh
+            setInterval(function() {
+                initializeSelectAll();
+            }, 1000);  // Adjust the interval as needed to match your page refresh timing
+        });
+
+        ////////////////////////////////////////////////////////////////
+        document.getElementById('download-data-btn').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent form submission
+            var offcanvas = new bootstrap.Offcanvas(document.getElementById('downloadDataOffcanvas'));
+            offcanvas.show();
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            function openAlertOffcanvas(alertId) {
+                fetch(`/get_alert_detailssub/${alertId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Update offcanvas content with a table structure
+                        const content = `
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Message</th>
+                                        <td>${data.message}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Room</th>
+                                        <td>${data.room_name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Timestamp</th>
+                                        <td>${data.timestamp}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Users</th>
+                                        <td>${data.sub_admin_names}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        `;
+                        document.getElementById('detailsContent').innerHTML = content;
+                        
+                        // Show offcanvas
+                        const offcanvas = new bootstrap.Offcanvas(document.getElementById('detailsOffcanvas'));
+                        offcanvas.show();
+                    })
+                    .catch(error => console.error('Error fetching alert details:', error));
+            }
+
+            document.querySelectorAll('.badge').forEach(function(badge) {
+                badge.addEventListener('click', function() {
+                    const alertId = this.dataset.alertId; // Assuming alertId is stored in data attribute
+                    openAlertOffcanvas(alertId);
+                });
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            function fetchAlerts() {
+                fetch('/get_alertssub/')
+                    .then(response => response.json())
+                    .then(data => {
+                        const alertTableBody = document.getElementById('alerttabletbody');
+                        alertTableBody.innerHTML = '';
+
+                        if (data.alerts.length > 0) {
+                            data.alerts.forEach(alert => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${alert.message}</td>
+                                    <td>${alert.alert_type}</td>
+                                    <td>${alert.room_name}</td>
+                                    <td>${alert.building_names}</td>
+                                    <td>${alert.sub_admin_names}</td>
+                                    <td>${alert.timestamp.split(' ')[0]}</td>
+                                    <td>${alert.timestamp.split(' ')[1]}</td>
+                                    <td>
+                                        <input type="checkbox" name="alert_ids" value="${alert.id}" ${alert.viewed ? 'checked' : ''} 
+                                            style="width: 20px; height: 20px; cursor: pointer; accent-color: #007BFF;">
+                                    </td>
+                                    <td>${alert.viewed_by}</td> <!-- Show who viewed -->
+                                    <td>${alert.viewed_at ? alert.viewed_at : ''}</td> <!-- Show when viewed -->
+                                `;
+                                alertTableBody.appendChild(row);
+                            });
+                        } else {
+                            const row = document.createElement('tr');
+                            row.innerHTML = '<td colspan="6">No alerts found.</td>';
+                            alertTableBody.appendChild(row);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching alerts:', error));
+            }
+
+            function checkPageAndFetchAlerts() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const page = urlParams.get('page');
+
+                if (!page || page === '1') {
+                    fetchAlerts();
+                    setInterval(() => {
+                        const currentPage = new URLSearchParams(window.location.search).get('page');
+                        if (!currentPage || currentPage === '1') {
+                            fetchAlerts();
+                        }
+                    }, 10000);
+                }
+            }
+
+            checkPageAndFetchAlerts();
+        });
+
+        // Add event listener to reset button
+        const resetAlertBtn = document.getElementById('reset-alert-btn');
+        resetAlertBtn.addEventListener('click', function() {
+            fetch('/reset_alertsub/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Alert reset successfully');
+                } else {
+                    console.error('Error resetting alert:', data.error);
+                }
+            })
+            .catch(error => console.error('Error resetting alert:', error));
+        });
+    // });
+
+    //////////////////////////////////  e thazhate venda kalayanam   
+    document.getElementById('resetAlertButton').addEventListener('click', function() {
+        fetch('/reset_alertsub/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Alerts have been reset.');
+            } else {
+                alert('Failed to reset alerts.');
+            }
+        })
+        .catch(error => {
+            console.error('Error resetting alerts:', error);
+        });
+    });
+    </script>
+{% endblock %}

@@ -1,0 +1,178 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% get_static_prefix as static %}
+
+{% block content %}
+<div class="container-fluid flex-grow-1 container-p-y">
+    <h4 class="py-0 mb-3">Sensor Data</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="live-sensor-data-tab" data-bs-toggle="tab" href="#live-sensor-data" role="tab" aria-controls="live-sensor-data" aria-selected="true">Live Sensor Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="past-sensor-data-tab" data-bs-toggle="tab" href="#past-sensor-data" role="tab" aria-controls="past-sensor-data" aria-selected="false">Past Sensor Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="graphical-sensor-data-tab" data-bs-toggle="tab" href="#graphical-sensor-data" role="tab" aria-controls="graphical-sensor-data" aria-selected="false">Graphical Sensor Data</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                  
+                    <div class="tab-pane fade show active" id="live-sensor-data" role="tabpanel" aria-labelledby="live-sensor-data-tab">
+                      <div class="tabcamz">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <div class="card mt-3">
+                                      <div class="card-header mt-0 mb-0 pt-3 pb-0 filtlinez">
+                                          <div class="d-flex justify-content-between align-items-center">
+                                              <div class="headlizt pt-0">
+                                                  <h5>Live Sensor Data</h5>
+                                              </div>
+                                          </div>
+                                          <div class="fillshow">
+                                              <div class="collapse mb-3" id="collapseFilter" style="display:block">
+                                                  <form class="dt_adv_search" method="GET" id="filterForm">
+                                                      <div class="row">
+                                                          <div class="col-12 col-sm-6 col-lg-3">
+                                                              <div class="ecommerce-select2-dropdown">
+                                                                  <label class="form-label" for="camera">Room</label>
+                                                                  <select id="camera" name="room" class="select2 form-select" data-placeholder="Select Room">
+                                                                    <option value="">All Rooms</option>
+                                                                    {% for room in rooms %}
+                                                                    <option value="{{ room.pk }}">{{ room.name }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                              </div>
+                                                          </div>
+                                                          
+                                                          <div class="col-12 col-sm-6 col-lg-3 ">
+                                                              <div class="sercanbox">
+                                                                  <button type="submit" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light">Search</button>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </form>
+                                              </div>
+                                          </div>
+                                      </div>
+                  
+                                      <div class="card-datatable table-responsive pt-0">
+                                          <table class="datatables-basic table conftable" id="sensordatatable">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Device Name</th>
+                                                      <th>Room & Users</th>
+                                                      <th>Temperature</th>
+                                                      <th>Humidity</th>
+                                                      <th>Door State</th>
+                                                      <th>Flood State</th>
+                                                      <th>Motion State</th>
+                                                      <th>Gas State</th>
+                                                      <th>Timestamp</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody class="table-border-bottom-0" id="sensordatatablebody">
+                                                  <!-- Data will be populated by JavaScript -->
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  
+                    <div class="tab-pane fade" id="past-sensor-data" role="tabpanel" aria-labelledby="past-sensor-data-tab">
+                        <div class="tabcamz">
+                            <h5>Past Sensor Data</h5>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="graphical-sensor-data" role="tabpanel" aria-labelledby="graphical-sensor-data-tab">
+                        <div class="tabcamz">
+                            <h5>Graphical Sensor Data</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    function fetchSensorData() {
+        const form = document.getElementById('filterForm');
+        const formData = new FormData(form);
+        const queryString = new URLSearchParams(formData).toString();
+
+        fetch(`/get_live_sensor_data/?${queryString}`)
+            .then(response => response.json())
+            .then(data => {
+                const sensorTableBody = document.getElementById('sensordatatablebody');
+                sensorTableBody.innerHTML = '';
+
+                if (data.sensor_data.length > 0) {
+                    data.sensor_data.forEach(sensor => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${sensor.room_name}</td>
+                            <td>
+                                <strong>Rooms:</strong>
+                                <ul>
+                                    ${sensor.building_names.map(building => `<li>${building}</li>`).join('')}
+                                </ul>
+                                <strong>Users:</strong>
+                                <ul>
+                                    ${Object.entries(sensor.building_subadmins).map(([building, subAdmins]) => `
+                                        <li>
+                                            <strong>${building}:</strong>
+                                            <ul>
+                                                ${subAdmins.map(subAdmin => `<li>${subAdmin}</li>`).join('')}
+                                            </ul>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </td>
+                            <td ${sensor.temperature_exceeds ? 'style="color: red;"' : ''}>${sensor.temperature}</td>
+                            <td ${sensor.humidity_exceeds ? 'style="color: red;"' : ''}>${sensor.humidity}</td>
+                            <td ${sensor.door_opened ? 'style="color: red;"' : ''}>${sensor.door_opened ? 'Detected' : 'Not Detected'}</td>
+                            <td ${sensor.flood_detected ? 'style="color: red;"' : ''}>${sensor.flood_detected ? 'Detected' : 'Not Detected'}</td>
+                            <td ${sensor.motion_detected ? 'style="color: red;"' : ''}>${sensor.motion_detected ? 'Detected' : 'Not Detected'}</td>
+                            <td ${sensor.gas_detected ? 'style="color: red;"' : ''}>${sensor.gas_detected ? 'Detected' : 'Not Detected'}</td>
+                            <td>${sensor.timestamp}</td>
+                        `;
+                        sensorTableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = '<td colspan="9">No sensor data found.</td>';
+                    sensorTableBody.appendChild(row);
+                }
+            })
+            .catch(error => console.error('Error fetching sensor data:', error));
+    }
+
+    // Fetch data initially
+    fetchSensorData();
+
+    // Fetch data on form submission
+    const form = document.getElementById('filterForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        fetchSensorData();
+    });
+
+    // Set an interval to refresh the data
+    setInterval(fetchSensorData, 5000);  // Refresh every 5 seconds
+});
+
+
+
+</script>
+{% endblock %}

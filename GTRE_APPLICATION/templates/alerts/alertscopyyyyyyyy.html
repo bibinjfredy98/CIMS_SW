@@ -1,0 +1,308 @@
+
+
+
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container-fluid flex-grow-1 container-p-y">
+    <div class="alert alert-success d-none" role="alert">Alert details saved successfully</div>
+    <div class="alert alert-success d-none" role="alert">Alert details updated successfully</div>
+    
+    <h4 class="py-3 mb-4">Alerts Dashboard</h4>
+
+    <!-- Tabs -->
+    <div class="nav-align-top nav-tabs-shadow mb-4">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="navs-top-home-tab" data-bs-toggle="tab" href="#navs-top-home" role="tab" aria-controls="navs-top-home" aria-selected="true">Alerts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="navs-top-home-pending-tab" data-bs-toggle="tab" href="#navs-top-home-pending" role="tab" aria-controls="navs-top-home-pending" aria-selected="false">Pending Alerts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="navs-top-home-viewed-tab" data-bs-toggle="tab" href="#navs-top-home-viewed" role="tab" aria-controls="navs-top-home-viewed" aria-selected="false">Resolved Alerts</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <!-- Alerts Tab -->
+            <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Filter Alerts</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Your filter form here -->
+                        <form class="row g-3" method="GET">
+                            <div class="col-md-3">
+                                <label class="form-label" for="camera">Room</label>
+                                <select id="camera" name="room" class="form-select" aria-label="Select Room">
+                                    <option value="">Select Room</option>
+                                    {% for room in rooms %}
+                                    <option value="{{ room.pk }}" {% if request.GET.room == room.pk|stringformat:"s" %}selected{% endif %}>{{ room.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="sensor">Sensor</label>
+                                <select id="sensor" name="sensor" class="form-select" aria-label="Select Sensor">
+                                    <option value="">Select Sensor</option>
+                                    <option value="temperature" {% if request.GET.sensor == 'temperature' %}selected{% endif %}>Temperature</option>
+                                    <option value="humidity" {% if request.GET.sensor == 'humidity' %}selected{% endif %}>Humidity</option>
+                                    <option value="door" {% if request.GET.sensor == 'door' %}selected{% endif %}>Door State</option>
+                                    <option value="flood" {% if request.GET.sensor == 'flood' %}selected{% endif %}>Flood State</option>
+                                    <option value="motion" {% if request.GET.sensor == 'motion' %}selected{% endif %}>Motion State</option>
+                                    <option value="gas" {% if request.GET.sensor == 'gas' %}selected{% endif %}>Gas State</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label" for="flatpickr-range">Date</label>
+                                <input type="text" class="form-control" name="date_range" placeholder="YYYY-MM-DD to YYYY-MM-DD" id="flatpickr-range" value="{{ request.GET.date_range }}" />
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary me-2">Search</button>
+                                <button id="reset-alert-btn" class="btn btn-outline-danger">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Alert Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                         
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Resolve</th> <!-- New column for checkboxes -->
+                                        <th>Message</th>
+                                        <th>Type</th>
+                                        <th>Room Name</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="alerttabletbody">
+                                    {% for alert in alerts %}
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="alert-checkbox" data-alert-id="{{ alert.id }}" {% if alert.viewed %}checked{% endif %} />
+                                        </td>
+                                        <td>{{ alert.message }}</td>
+                                        <td>{{ alert.type }}</td>
+                                        <td>{{ alert.room.name }}</td>
+                                        <td>{{ alert.timestamp|date:"Y-m-d" }}</td>
+                                        <td>{{ alert.timestamp|time:"H:i:s" }}</td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">No alerts found.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                        <div class="text-center mt-4">
+                            <button id="previous-page-btn" class="btn btn-primary me-2">Previous</button>
+                            <button id="next-page-btn" class="btn btn-primary">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Alerts Tab -->
+            <div class="tab-pane fade" id="navs-top-home-pending" role="tabpanel">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Pending Alerts</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Message</th>
+                                        <th>Timestamp</th>
+                                        <th>Device</th>
+                                        <th>Room</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for alert in unviewed_alerts %}
+                                    <tr>
+                                        <td>{{ alert.message }}</td>
+                                        <td>{{ alert.timestamp|date:"d M Y, H:i" }}</td>
+                                        <td>{{ alert.room.name }}</td>
+                                        <td>
+                                            {% for building in alert.room.buildings.all %}
+                                                {{ building.name }}{% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td><span class="badge bg-warning badge-clickable" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view details" data-alert-id="{{ alert.id }}">Unviewed</span></td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="text-center">No unviewed alerts found.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resolved Alerts Tab -->
+            <div class="tab-pane fade" id="navs-top-home-viewed" role="tabpanel">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Resolved Alerts</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Message</th>
+                                        <th>Timestamp</th>
+                                        <th>Device</th>
+                                        <th>Room</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for alert in viewed_alerts %}
+                                    <tr>
+                                        <td>{{ alert.message }}</td>
+                                        <td>{{ alert.timestamp|date:"d M Y, H:i" }}</td>
+                                        <td>{{ alert.room.name }}</td>
+                                        <td>
+                                            {% for building in alert.room.buildings.all %}
+                                                {{ building.name }}{% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td><span class="badge bg-secondary badge-clickable" data-bs-toggle="tooltip" data-bs-placement="top" title="Click to view details" data-alert-id="{{ alert.id }}">Viewed</span></td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="text-center">No viewed alerts found.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    let currentPage = 1;
+
+    function fetchAlerts(page) {
+        fetch(`/get_alerts_data/?page=${page}`)
+            .then(response => response.json())
+            .then(data => {
+                const alertTableBody = document.getElementById('alerttabletbody');
+                alertTableBody.innerHTML = '';
+
+                if (data.alerts.length > 0) {
+                    data.alerts.forEach(alert => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>
+                                <input type="checkbox" class="alert-checkbox" data-alert-id="${alert.id}" ${alert.viewed ? 'checked' : ''} />
+                            </td>
+                            <td>${alert.message}</td>
+                            <td>${alert.alert_type}</td>
+                            <td>${alert.room_name}</td>
+                            <td>${alert.timestamp.split(' ')[0]}</td>
+                            <td>${alert.timestamp.split(' ')[1]}</td>
+                        `;
+                        alertTableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = '<td colspan="6" class="text-center">No alerts found.</td>';
+                    alertTableBody.appendChild(row);
+                }
+
+                // Disable the 'Previous' button on the first page
+                document.getElementById('previous-page-btn').disabled = page === 1;
+
+                // Disable the 'Next' button if there are fewer than 10 alerts on the page
+                document.getElementById('next-page-btn').disabled = data.alerts.length < 10;
+
+                // Update the current page number
+                currentPage = page;
+            })
+            .catch(error => console.error('Error fetching alerts:', error));
+    }
+
+    // Initial fetch for page 1
+    fetchAlerts(currentPage);
+
+    // Event listeners for pagination buttons
+    document.getElementById('previous-page-btn').addEventListener('click', function() {
+        if (currentPage > 1) {
+            fetchAlerts(currentPage - 1);
+        }
+    });
+
+    document.getElementById('next-page-btn').addEventListener('click', function() {
+        fetchAlerts(currentPage + 1);
+    });
+
+    // Continue auto-refresh every 5 seconds for the current page
+    setInterval(() => fetchAlerts(currentPage), 5000);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Make sure CSRF token is properly included in the AJAX request
+    const csrftoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+    document.querySelectorAll('.alert-checkbox').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            const alertId = this.getAttribute('data-alert-id');
+            const viewedStatus = this.checked;
+
+            fetch(`/update_alert_view_status/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,  // Django CSRF token
+                },
+                body: JSON.stringify({ 
+                    'alert_id': alertId, 
+                    'viewed': viewedStatus 
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Alert status updated successfully.');
+                } else {
+                    console.error('Failed to update alert status.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+});
+
+
+</script>
+
+{% endblock %}

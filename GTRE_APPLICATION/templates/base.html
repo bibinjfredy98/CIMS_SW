@@ -1,0 +1,368 @@
+{% load static %}
+
+{% get_static_prefix as static %}
+
+<!doctype html>
+
+<html
+  lang="en"
+  class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="{{static}}assets/"
+  data-template="vertical-menu-template">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Navbar - UI elements | Vuexy - Bootstrap Admin Template</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{static}}assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap"
+      rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="{{static}}assets/vendor/fonts/flag-icons.css" />
+    <link rel="stylesheet" href="{{static}}assets/vendor/fonts/fontawesome.css" />
+    <link rel="stylesheet" href="{{static}}assets/vendor/fonts/tabler-icons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{{static}}assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{static}}assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{static}}assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{{static}}assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="{{static}}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="{{static}}assets/vendor/libs/typeahead-js/typeahead.css" />
+     <!-- Favicon -->
+     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon/favicon.ico" />
+
+     <!-- Fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com" />
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+     <link
+       href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&ampdisplay=swap"
+       rel="stylesheet" />
+ 
+     <!-- Icons -->
+     <link rel="stylesheet" href="{{static}}assets/vendor/fonts/fontawesome.css" />
+     <link rel="stylesheet" href="{{static}}assets/vendor/fonts/tabler-icons.css" />
+     <link rel="stylesheet" href="{{static}}assets/vendor/fonts/flag-icons.css" />
+ 
+     <!-- Core CSS -->
+     <link rel="stylesheet" href="{{static}}assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
+     <link rel="stylesheet" href="{{static}}assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
+     <link rel="stylesheet" href="{{static}}assets/css/demo.css" />
+ 
+     <!-- Vendors CSS -->
+     <link rel="stylesheet" href="{{static}}assets/vendor/libs/node-waves/node-waves.css" />
+     <link rel="stylesheet" href="{{static}}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+     <link rel="stylesheet" href="{{static}}assets/vendor/libs/typeahead-js/typeahead.css" />
+ 
+     <!-- Page CSS -->
+ 
+     <!-- Helpers -->
+     <script src="{{static}}assets/vendor/js/helpers.js"></script>
+     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+     <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+     <script src="{{static}}assets/vendor/js/template-customizer.js"></script>
+     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+     <script src="{{static}}assets/js/config.js"></script>
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="{{static}}assets/vendor/js/helpers.js"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+    <script src="{{static}}assets/vendor/js/template-customizer.js"></script>
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{{static}}assets/js/config.js"></script>
+  </head>
+
+  <style>
+    footer{
+        position: fixed!important;
+        bottom: 0!important;
+        width: 100%!important;
+
+    }
+    
+  </style>
+
+  <body>
+
+
+              
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+            <div class="container-fluid">
+              <!-- <a class="navbar-brand" href="javascript:void(0)">CIMS</a> -->
+              <div class="navbar-brand" style="color: rgb(230, 72, 14);">
+                Nxt<span style="font-style: italic;">E</span>ye-Admin
+            </div>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="javascript:void(0)">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">Link</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Dropdown
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="javascript:void(0)">Action</a></li>
+                      <li><a class="dropdown-item" href="javascript:void(0)">Another action</a></li>
+                      <li>
+                        <hr class="dropdown-divider" />
+                      </li>
+                      <li><a class="dropdown-item" href="javascript:void(0)">Something else here</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link disabled" href="javascript:void(0)" tabindex="-1">Disabled</a>
+                  </li>
+                </ul>
+                <form class="d-flex" onsubmit="return false">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                  <button class="btn btn-primary" type="submit">Search</button>
+
+                  <a class="dropdown-item" href="admin_login.html" target="_blank">
+                    <i class="ti ti-logout me-2 ti-sm"></i>
+                    <span class="align-middle">Log Out</span>
+                  </a>
+
+                </form>
+              </div>
+            </div>
+          </nav>
+
+
+          <!-- Footer -->
+          <!-- <footer class="content-footer footer bg-footer-theme">
+            <div class="container-xxl">
+              <div
+                class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column">
+                <div>
+                  ©
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  , made with ❤️ by
+                  <a href="https://pixinvent.com" target="_blank" class="footer-link text-primary fw-medium"
+                    >Pixinvent</a
+                  >
+                </div>
+                <div class="d-none d-lg-inline-block">
+                  <a href="https://themeforest.net/licenses/standard" class="footer-link me-4" target="_blank"
+                    >License</a
+                  >
+                  <a href="https://1.envato.market/pixinvent_portfolio" target="_blank" class="footer-link me-4"
+                    >More Themes</a
+                  >
+
+                  <a
+                    href="https://demos.pixinvent.com/vuexy-html-admin-template/documentation/"
+                    target="_blank"
+                    class="footer-link me-4"
+                    >Documentation</a
+                  >
+
+                  <a href="https://pixinvent.ticksy.com/" target="_blank" class="footer-link d-none d-sm-inline-block"
+                    >Support</a
+                  >
+                </div>
+              </div>
+            </div>
+          </footer> -->
+          <!-- / Footer -->
+          <div class="container">
+            <div class="section" id="Rooms">
+                <i class="fas fa-door-open"></i>
+                <span>ROOMS</span>
+            </div>
+            <div class="section" id="Device">
+                <i class="fas fa-mobile-alt"></i>
+                <span>DEVICE</span>
+            </div>
+    
+            <div class="section" id="Power">
+                <i class="fas fa-bolt"></i>
+                <span>POWER SECTION</span>
+            </div>
+    
+            <div class="section" id="Sensorvalues">
+                <i class="fas fa-microchip"></i>
+                <span>SENSOR VALUES</span>
+            </div>
+            <div class="section" id="live">
+                <i class="fas fa-video"></i>
+                <span>LIVE</span>
+            </div>
+            <div class="section" id="alarm">
+                <i class="fas fa-bell"></i>
+                <span>ALARM</span>
+            </div>
+            <div class="section" id="user">
+                <i class="fas fa-user"></i>
+                <span>USER</span>
+            </div>
+            <div class="section" id="config">
+                <i class="fas fa-cog"></i>
+                <span>CONFIG</span>
+            </div>
+        </div>
+
+        <!-- Front Pages -->
+        <li class="menu-item">
+          <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons ti ti-files"></i>
+            <div data-i18n="Front Pages">Front Pages</div>
+          </a>
+          <ul class="menu-sub">
+            <li class="menu-item">
+              <a href="../front-pages/landing-page.html" class="menu-link" target="_blank">
+                <div data-i18n="Landing">Landing</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="../front-pages/pricing-page.html" class="menu-link" target="_blank">
+                <div data-i18n="Pricing">Pricing</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="../front-pages/payment-page.html" class="menu-link" target="_blank">
+                <div data-i18n="Payment">Payment</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="../front-pages/checkout-page.html" class="menu-link" target="_blank">
+                <div data-i18n="Checkout">Checkout</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="../front-pages/help-center-landing.html" class="menu-link" target="_blank">
+                <div data-i18n="Help Center">Help Center</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+
+          
+
+          <footer class="footer bg-secondary mb-4">
+            <div
+              class="container-fluid d-flex flex-md-row flex-column justify-content-between align-items-md-center gap-1 container-p-x py-3">
+              <div>
+                <a
+                  href="https://demos.pixinvent.com/vuexy-html-admin-template/landing/"
+                  target="_blank"
+                  class="footer-text fw-medium"
+                  >NxtEye-CIMS</a
+                >
+                ©
+              </div>
+              <div>
+                <a href="https://themeforest.net/licenses/standard" class="footer-link me-4" target="_blank"
+                  >License</a
+                >
+                <a href="javascript:void(0)" class="footer-link me-4">Help</a>
+                <a href="javascript:void(0)" class="footer-link me-4">Contact</a>
+                <a href="javascript:void(0)" class="footer-link">Terms &amp; Conditions</a>
+              </div>
+            </div>
+          </footer>
+
+
+
+
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+
+    <script src="{{static}}assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="{{static}}assets/vendor/libs/popper/popper.js"></script>
+    <script src="{{static}}assets/vendor/js/bootstrap.js"></script>
+    <script src="{{static}}assets/vendor/libs/node-waves/node-waves.js"></script>
+    <script src="{{static}}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="{{static}}assets/vendor/libs/hammer/hammer.js"></script>
+    <script src="{{static}}assets/vendor/libs/i18n/i18n.js"></script>
+    <script src="{{static}}assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="{{static}}assets/vendor/js/menu.js"></script>
+
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="{{static}}assets/vendor/js/dropdown-hover.js"></script>
+    <script src="{{static}}assets/vendor/js/mega-dropdown.js"></script>
+    <!-- Main JS -->
+    <script src="{{static}}assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="{{static}}assets/js/ui-navbar.js"></script>
+
+    
+  <script src="{{static}}assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="{{static}}assets/vendor/libs/popper/popper.js"></script>
+  <script src="{{static}}assets/vendor/js/bootstrap.js"></script>
+  <script src="{{static}}assets/vendor/libs/node-waves/node-waves.js"></script>
+  <script src="{{static}}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="{{static}}assets/vendor/libs/hammer/hammer.js"></script>
+  <script src="{{static}}assets/vendor/libs/i18n/i18n.js"></script>
+  <script src="{{static}}assets/vendor/libs/typeahead-js/typeahead.js"></script>
+  <script src="{{static}}assets/vendor/js/menu.js"></script>
+
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+  <script src="{{static}}assets/vendor/js/dropdown-hover.js"></script>
+  <script src="{{static}}assets/vendor/js/mega-dropdown.js"></script>
+
+  <!-- Main JS -->
+  <script src="{{static}}assets/js/main.js"></script>
+
+  <!-- Page JS -->
+  <script src="{{static}}assets/js/ui-navbar.js"></script>
+
+
+
+
+  
+  <script src="{{static}}assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="{{static}}assets/vendor/libs/popper/popper.js"></script>
+  <script src="{{static}}assets/vendor/js/bootstrap.js"></script>
+  <script src="{{static}}assets/vendor/libs/node-waves/node-waves.js"></script>
+  <script src="{{static}}assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="{{static}}assets/vendor/libs/hammer/hammer.js"></script>
+  <script src="{{static}}assets/vendor/libs/i18n/i18n.js"></script>
+  <script src="{{static}}assets/vendor/libs/typeahead-js/typeahead.js"></script>
+  <script src="{{static}}assets/vendor/js/menu.js"></script>
+
+  <!-- endbuild -->
+
+  <!-- Vendors JS -->
+
+  <!-- Main JS -->
+  <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

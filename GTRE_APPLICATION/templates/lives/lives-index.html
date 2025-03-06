@@ -1,0 +1,443 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% get_static_prefix as static %}
+
+{% block content %}
+<div class="container-fluid flex-grow-1 container-p-y">
+    <h4 class="py-0 mb-3">Sensor Data</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-align-top nav-tabs-shadow mb-4">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="live-sensor-data-tab" data-bs-toggle="tab" href="#live-sensor-data" role="tab" aria-controls="live-sensor-data" aria-selected="true">Live Sensor Data</a>
+                    </li>
+<!--                    
+                    <li class="nav-item">
+                        <a class="nav-link" id="graphical-sensor-data-tab" data-bs-toggle="tab" href="#graphical-sensor-data" role="tab" aria-controls="graphical-sensor-data" aria-selected="false">Graphical Sensor Data</a>
+                    </li> -->
+                </ul>
+                <div class="tab-content">
+                  
+                    <div class="tab-pane fade show active" id="live-sensor-data" role="tabpanel" aria-labelledby="live-sensor-data-tab">
+                      <div class="tabcamz">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <div class="card mt-3">
+                                      <div class="card-header mt-0 mb-0 pt-3 pb-0 filtlinez">
+                                          <div class="d-flex justify-content-between align-items-center">
+                                              <div class="headlizt pt-0">
+                                                  <h5>Live Sensor Data</h5>
+                                              </div>
+                                          </div>
+                                          <div class="fillshow">
+                                              <div class="collapse mb-3" id="collapseFilter" style="display:block">
+                                                  <form class="dt_adv_search" method="GET" id="filterForm">
+                                                      <div class="row">
+                                                          <div class="col-12 col-sm-6 col-lg-3">
+                                                              <div class="ecommerce-select2-dropdown">
+                                                                  <label class="form-label" for="camera">Devices</label>
+                                                                  <select id="camera" name="room" class="select2 form-select" data-placeholder="Select Room">
+                                                                      <option value="">All Devices</option>
+                                                                      {% for room in rooms %}
+                                                                      <option value="{{ room.pk }}">{{ room.name }}</option>
+                                                                      {% endfor %}
+                                                                  </select>
+                                                              </div>
+                                                          </div>
+                                                          
+                                                          <div class="col-12 col-sm-6 col-lg-3 ">
+                                                              <div class="sercanbox">
+                                                                  <button type="submit" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light">Search</button>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </form>
+                                              </div>
+                                          </div>
+                                      </div>
+                  
+                                      <div class="card-datatable table-responsive pt-0">
+                                          <table class="datatables-basic table conftable" id="sensordatatable">
+                                              <thead>
+                                                  
+                                                  <tr>
+                                                    <th>Device Name</th>
+                                                    <th>Room & Users</th>
+                                                    <th>Temperature</th>
+                                                    <th>Humidity</th>
+                                                    <th>Door State</th>
+                                                    <th>Flood State</th>
+                                                    <th>Motion State</th>
+                                                    <th>Gas State</th>
+                                                    <th>Timestamp</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody class="table-border-bottom-0" id="sensordatatablebody">
+                                                  <!-- Data will be populated by JavaScript -->
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+
+                    <!-- Modal HTML -->
+                    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="detailsModalLabel">Room Details</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <div id="modalDetailsContent">
+                                      <!-- Dynamic content will be inserted here -->
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+
+                  
+                   
+
+                    <!-- <div class="tab-pane fade" id="graphical-sensor-data" role="tabpanel" aria-labelledby="graphical-sensor-data-tab">
+                        <div class="tabcamz">
+                            <h5>Graphical Sensor Data</h5>
+
+
+
+                            <div class="container-fluid flex-grow-1 container-p-y" id="viewcontainer">
+                                <div class="alert alert-success d-none" role="alert">Section details saved successfully </div>
+                                <div class="alert alert-success d-none" role="alert">Section details updated successfully </div>
+
+                                <div class="col-md-12">
+                                    <div class="nav-align-top nav-tabs-shadow mb-4">
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="navs-top-cluster" role="tabpanel">
+                                                <div class="tabcamz">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                          <div class="card h-100">
+                                                              <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
+                                                                  <h5 class="mb-0">Humidity and Temperature</h5>
+                                                                  <div class="d-flex">
+                                                                      <select id="roomFilterSelect" class="form-select w-auto me-2" aria-label="Room Filter">
+                                                                          <option value="" selected>All Rooms</option>
+                                                                          {% for room in rooms %}
+                                                                              <option value="{{ room.id }}">{{ room.name }}</option>
+                                                                          {% endfor %}
+                                                                      </select>
+                                                                      <select id="timeFilterSelecttest" class="form-select w-auto" aria-label="Time Filter">
+                                                                          <option value="30min">Last 30 min</option>
+                                                                          <option value="1h">Last 1 hour</option>
+                                                                          <option value="2h">Last 2 hours</option>
+                                                                          <option value="5h">Last 5 hours</option>
+                                                                          <option value="8h">Last 8 hours</option>
+                                                                          <option value="12h">Last 12 hours</option>
+                                                                          <option value="24h" selected>Last 24 hours</option>
+                                                                          <option value="2d">Last 2 days</option>
+                                                                          <option value="10d">Last 10 days</option>
+                                                                      </select>
+                                                                  </div>
+                                                              </div>
+                                                              <div class="card-body p-4">
+                                                                  <div id="lineCharttest" class="mt-3"></div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>                
+                                
+                            
+                              
+                                
+                                  
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div> -->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    function fetchSensorData() {
+        const form = document.getElementById('filterForm');
+        const formData = new FormData(form);
+        const queryString = new URLSearchParams(formData).toString();
+
+        fetch(`/get_live_sensor_data/?${queryString}`)
+            .then(response => response.json())
+            .then(data => {
+                const sensorTableBody = document.getElementById('sensordatatablebody');
+                sensorTableBody.innerHTML = '';
+
+                if (data.sensor_data.length > 0) {
+                    data.sensor_data.forEach(sensor => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${sensor.room_name}</td>
+                            <td>
+                                <i class="fa fa-eye view-icon" data-room="${sensor.room_name}" aria-hidden="true"></i>
+                                <div class="details d-none">
+                                    <strong>Rooms:</strong>
+                                    <ul class="room-list">
+                                        ${sensor.building_names.map(building => `<li>${building}</li>`).join('')}
+                                    </ul>
+                                    <strong>Users:</strong>
+                                    <ul class="user-list">
+                                        ${Object.entries(sensor.building_subadmins).map(([building, subAdmins]) => `
+                                            <li>
+                                                <strong>${building}:</strong>
+                                                <ul>
+                                                    ${subAdmins.map(subAdmin => `<li>${subAdmin}</li>`).join('')}
+                                                </ul>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                            </td>
+                            <td ${sensor.temperature_exceeds ? 'style="color: red;"' : ''}>${sensor.temperature}</td>
+                            <td ${sensor.humidity_exceeds ? 'style="color: red;"' : ''}>${sensor.humidity}</td>
+                            <td ${sensor.door_opened ? 'style="color: red;"' : ''}>${sensor.door_opened ? 'Detected' : 'Not Detected'}</td>
+                            <td ${sensor.flood_detected ? 'style="color: red;"' : ''}>${sensor.flood_detected ? 'Detected' : 'Not Detected'}</td>
+                            <td ${sensor.motion_detected ? 'style="color: red;"' : ''}>${sensor.motion_detected ? 'Detected' : 'Not Detected'}</td>
+                            <td ${sensor.gas_detected ? 'style="color: red;"' : ''}>${sensor.gas_detected ? 'Detected' : 'Not Detected'}</td>
+                            <td>${sensor.timestamp}</td>
+                        `;
+                        sensorTableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = '<td colspan="8">No sensor data found.</td>';
+                    sensorTableBody.appendChild(row);
+                }
+
+                // Add event listeners to "View" icons
+                document.querySelectorAll('.view-icon').forEach(icon => {
+                    icon.addEventListener('click', function() {
+                        const roomName = this.getAttribute('data-room');
+                        const sensor = data.sensor_data.find(sensor => sensor.room_name === roomName);
+                        const modalBody = document.getElementById('modalDetailsContent');
+
+                        // Populate modal content
+                        modalBody.innerHTML = `
+                            <strong>Rooms:</strong>
+                            <ul class="room-list">
+                                ${sensor.building_names.map(building => `<li>${building}</li>`).join('')}
+                            </ul>
+                            <strong>Users:</strong>
+                            <ul class="user-list">
+                                ${Object.entries(sensor.building_subadmins).map(([building, subAdmins]) => `
+                                    <li>
+                                        <strong>${building}:</strong>
+                                        <ul>
+                                            ${subAdmins.map(subAdmin => `<li>${subAdmin}</li>`).join('')}
+                                        </ul>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        `;
+
+                        // Show modal
+                        const detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                        detailsModal.show();
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching sensor data:', error));
+    }
+
+    // Fetch data initially
+    fetchSensorData();
+
+    // Fetch data on form submission
+    const form = document.getElementById('filterForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        fetchSensorData();
+    });
+
+    // Set an interval to refresh the data
+    setInterval(fetchSensorData, 1000);  // Refresh every 5 seconds
+});
+
+  
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   let cardColor, headingColor, labelColor, borderColor, legendColor;
+
+//   // Set colors based on the theme
+//   if (isDarkStyle) {
+//       cardColor = config.colors_dark.cardColor;
+//       headingColor = config.colors_dark.headingColor;
+//       labelColor = config.colors_dark.textMuted;
+//       legendColor = config.colors_dark.bodyColor;
+//       borderColor = config.colors_dark.borderColor;
+//   } else {
+//       cardColor = config.colors.cardColor;
+//       headingColor = config.colors.headingColor;
+//       labelColor = config.colors.textMuted;
+//       legendColor = config.colors.bodyColor;
+//       borderColor = config.colors.borderColor;
+//   }
+
+//   const chartColors = {
+//       line: {
+//           temperature: '#FF5733', // Vibrant orange for Temperature
+//           humidity: '#33C1FF'     // Bright blue for Humidity
+//       }
+//   };
+
+//   function fetchDataAndRenderLineChart(timeFilter, roomId) {
+//       const lineChartEl = document.getElementById('lineCharttest');
+//       if (!lineChartEl) {
+//           console.error("Element with ID 'lineCharttest' not found");
+//           return;
+//       }
+
+//       // Set loading state
+//       lineChartEl.innerHTML = '<p>Loading...</p>';
+
+//       const url = `/fetch_room_data_test/?time_filter=${timeFilter}&room_id=${roomId}`;
+
+//       fetch(url)
+//           .then(response => response.json())
+//           .then(data => {
+//               const timestamps = data.map(entry => entry.timestamp);
+//               const temperatureData = data.map(entry => entry.temperature);
+//               const humidityData = data.map(entry => entry.humidity);
+
+//               const lineChartConfig = {
+//                   chart: {
+//                       height: 400,
+//                       type: 'line',
+//                       toolbar: {
+//                           show: false
+//                       },
+//                       animations: {
+//                           enabled: true,
+//                           easing: 'easeinout',
+//                           speed: 800
+//                       }
+//                   },
+//                   series: [
+//                       { name: 'Temperature', data: temperatureData },
+//                       { name: 'Humidity', data: humidityData }
+//                   ],
+//                   xaxis: {
+//                       categories: timestamps,
+//                       labels: {
+//                           style: {
+//                               colors: labelColor,
+//                               fontSize: '12px'
+//                           }
+//                       }
+//                   },
+//                   yaxis: {
+//                       labels: {
+//                           style: {
+//                               colors: labelColor,
+//                               fontSize: '12px'
+//                           }
+//                       }
+//                   },
+//                   tooltip: {
+//                       shared: true,
+//                       intersect: false,
+//                       x: {
+//                           formatter: function (val) {
+//                               return val; // Return the timestamp
+//                           }
+//                       },
+//                       y: {
+//                           formatter: function (val) {
+//                               return val + '°'; // Return the value with a degree symbol
+//                           }
+//                       }
+//                   },
+//                   colors: [chartColors.line.temperature, chartColors.line.humidity],
+//                   stroke: {
+//                       width: 3,
+//                       curve: 'smooth'
+//                   },
+//                   grid: {
+//                       borderColor: borderColor
+//                   },
+//                 //   markers: {
+//                 //       size: 1,
+//                 //       colors: ['#FF6F61', '#36A2EB'], // More vibrant marker colors
+//                 //       strokeColors: '#fff',
+//                 //       strokeWidth: 2,
+//                 //       hover: {
+//                 //           size: 7
+//                 //       }
+//                 //   },
+//                   fill: {
+//                       type: 'gradient',
+//                       gradient: {
+//                           shade: 'light',
+//                           type: 'horizontal',
+//                           shadeIntensity: 0.5,
+//                           gradientToColors: ['#FFC371', '#4BC0C0'], // Gradient effect for each line
+//                           opacityFrom: 0.7,
+//                           opacityTo: 0.3,
+//                           stops: [0, 100]
+//                       }
+//                   }
+//               };
+
+//               // Clear previous chart
+//               lineChartEl.innerHTML = '';
+//               const lineChart = new ApexCharts(lineChartEl, lineChartConfig);
+//               lineChart.render();
+//           })
+//           .catch(error => {
+//               console.error("Error fetching data for line chart:", error);
+//               lineChartEl.innerHTML = '<p>Error loading data</p>';
+//           });
+//   }
+
+//   // Event listeners for filters
+//   document.getElementById('timeFilterSelecttest').addEventListener('change', function () {
+//       const selectedTimeFilter = this.value;
+//       const selectedRoomId = document.getElementById('roomFilterSelect').value;
+//       fetchDataAndRenderLineChart(selectedTimeFilter, selectedRoomId);
+//   });
+
+//   document.getElementById('roomFilterSelect').addEventListener('change', function () {
+//       const selectedRoomId = this.value;
+//       const selectedTimeFilter = document.getElementById('timeFilterSelecttest').value;
+//       fetchDataAndRenderLineChart(selectedTimeFilter, selectedRoomId);
+//   });
+
+//   // Initial fetch for the last 24 hours, all rooms
+//   fetchDataAndRenderLineChart('24h', '');
+// })();
+
+
+
+</script>
+
+
+
+{% endblock %}
