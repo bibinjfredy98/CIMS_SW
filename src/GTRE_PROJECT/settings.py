@@ -87,7 +87,7 @@ WSGI_APPLICATION = "GTRE_PROJECT.wsgi.application"
 #         "HOST":"localhost",
 #         "PORT":"3306",
 #     }
-# }
+# }####hello
 
 
 DATABASES = {
